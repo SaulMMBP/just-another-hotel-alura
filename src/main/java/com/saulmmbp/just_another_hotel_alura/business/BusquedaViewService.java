@@ -7,12 +7,12 @@ import com.saulmmbp.just_another_hotel_alura.business.dto.HuespedDTO;
 import com.saulmmbp.just_another_hotel_alura.dataaccess.HuespedDaoImpl;
 import com.saulmmbp.just_another_hotel_alura.util.MySqlConnection;
 
-public class HuespedService {
+public class BusquedaViewService {
 
 	private Connection conn;
 	private HuespedDaoImpl huespedDao;
 
-	public HuespedService() {
+	public BusquedaViewService() {
 		try {
 			this.conn = MySqlConnection.getConnection();
 			this.huespedDao = new HuespedDaoImpl(conn);
@@ -23,11 +23,7 @@ public class HuespedService {
 
 	public List<HuespedDTO> getHuespedList() {
 		List<HuespedDTO> huespedes = new ArrayList<>();
-		try {
-			huespedes = this.huespedDao.findAll().stream().map(huesped -> new HuespedDTO(huesped)).toList();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		huespedes = this.huespedDao.findAllWithReservas().stream().map(huesped -> new HuespedDTO(huesped)).toList();
 		return huespedes;
 	}
 }

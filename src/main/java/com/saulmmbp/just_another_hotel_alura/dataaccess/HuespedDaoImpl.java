@@ -5,92 +5,60 @@ import java.util.*;
 
 import com.saulmmbp.just_another_hotel_alura.model.*;
 
-public class HuespedDaoImpl implements Dao<Huesped, Long> {
+public class HuespedDaoImpl implements HuespedDao {
 
 	private Connection conn;
 	
 	public HuespedDaoImpl(Connection conn) {
 		this.conn = conn;
 	}
-
+	
 	@Override
-	public int save(Huesped entity) throws SQLException {
-		int affectedRows = 0;
-		String sql;
-		if(entity.getId() != null && entity.getId() != 0) {
-			sql = "UPDATE huespedes SET nombre=?, apellido=?, fecha_nacimiento=?, nacionalidad=?, telefono=? WHERE id=?";
-		} else {
-			sql = "INSERT INTO huespedes(nombre, apellido, fecha_nacimiento, nacionalidad, telefono) VALUES (?,?,?,?,?)";
-		}
-		
-		try(PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setString(1, entity.getNombre());
-			stmt.setString(2, entity.getApellido());
-			stmt.setDate(3, entity.getFechaNacimiento());
-			stmt.setString(4, entity.getNacionalidad().toString());
-			stmt.setString(5, entity.getTelefono());
-			if(entity.getId() != null && entity.getId() != 0) {
-				stmt.setLong(6, entity.getId());
-			}
-			affectedRows = stmt.executeUpdate();
-		}
-		return affectedRows;
-	}
-
-	@Override
-	public Huesped findById(Long id) throws SQLException {
-		Huesped huesped = null;
-		try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM huespedes WHERE id=?")) {
-			stmt.setLong(1, id);
-			try(ResultSet rs = stmt.executeQuery()) {
-				if(rs.next()) {
-					huesped = getHuesped(rs);
-				}
-			}
-		}
-		return huesped;
-	}
-
-	@Override
-	public List<Huesped> findAll() throws SQLException {
+	public List<Huesped> findAllWithReservas() {
 		List<Huesped> huespedes = new ArrayList<>();
 		try(Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM huespedes")) {
+				ResultSet rs = stmt.executeQuery("SELECT h.id AS id_huesped, h.nombre, h.apellido, h.fecha_nacimiento, h.nacionalidad, h.telefono,"
+						+ "r.id AS id_reserva, r.fecha_entrada, r.fecha_salida, r.valor, r.forma_pago "
+						+ "FROM huespedes AS h "
+						+ "INNER JOIN reservas AS r ON h.id=r.huesped_id")) {
 			while(rs.next()) {
-				huespedes.add(getHuesped(rs));
+					Huesped huesped = new Huesped();
+					huesped.setId(rs.getLong("id_huesped"));
+					huesped.setNombre(rs.getString("nombre"));
+					huesped.setApellido(rs.getString("apellido"));
+					huesped.setFechaNacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
+					huesped.setNacionalidad(toNacionalidadEnum(rs.getString("nacionalidad")));
+					huesped.setTelefono(rs.getString("telefono"));
+					
+					Reserva reserva = new Reserva();
+					reserva.setId(rs.getLong("id_reserva"));
+					reserva.setFechaEntrada(rs.getDate("fecha_entrada").toLocalDate());
+					reserva.setFechaSalida(rs.getDate("fecha_salida").toLocalDate());
+					reserva.setValor(rs.getBigDecimal("valor"));
+					reserva.setFormaPago(rs.getString("forma_pago"));
+					reserva.setHuesped_id(rs.getLong("id_huesped"));
+				if(!huespedes.contains(huesped)) {
+					huesped.addReserva(reserva);
+					huespedes.add(huesped);
+				} else {
+					huespedes.get(huespedes.indexOf(huesped)).addReserva(reserva);
+				}
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return huespedes;
 	}
-
-	@Override
-	public int deleteById(Long id) throws SQLException {
-		int affectedRows = 0;
-		try(PreparedStatement stmt = conn.prepareStatement("DELETE FROM huespedes WHERE id=?")) {
-			stmt.setLong(1, id);
-			affectedRows = stmt.executeUpdate();
-		}
-		return affectedRows;
-	}
 	
-	private Huesped getHuesped(ResultSet rs) throws SQLException {
-		Huesped huesped = new Huesped();
-		huesped.setId(rs.getLong("id"));
-		huesped.setNombre(rs.getString("nombre"));
-		huesped.setApellido(rs.getString("apellido"));
-		huesped.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
-		huesped.setNacionalidad(getNacionalidad(rs.getString("nacionalidad")));
-		huesped.setTelefono(rs.getString("telefono"));
-		return huesped;
-	}
-	
-	private Nacionalidad getNacionalidad(String nacionalidad) {
+	private Nacionalidad toNacionalidadEnum(String nacionalidad) {
 		int i = 0;
-		for(; i < Nacionalidad.values().length && !Nacionalidad.values()[i].toString().equals(nacionalidad); i++) {}
-		if (Nacionalidad.values()[i].toString().equals(nacionalidad)) {
-			return Nacionalidad.values()[i];
+		Nacionalidad[] values = Nacionalidad.values();
+		while(i < values.length && !values[i].toString().equals(nacionalidad)) i++;
+		
+		if (i != values.length && values[i].toString().equals(nacionalidad)) {
+			return values[i];
 		}
-		throw new RuntimeException("Nacionalidad no encontrada");
+		throw new RuntimeException("No se encontró la nacionalidad en el sistema");
 	}
 
 }

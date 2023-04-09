@@ -13,7 +13,6 @@ class PropertiesReaderTest {
 	@Test
 	void testGetProperties() {
 		Properties properties = PropertiesReader.getProperties();
-		properties.forEach((key, value) -> System.out.println(key + "=" + value));
 		assertNotNull(properties);
 	}
 
