@@ -2,12 +2,14 @@ package com.saulmmbp.just_another_hotel_alura.views;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.saulmmbp.just_another_hotel_alura.business.BusquedaViewService;
+import com.saulmmbp.just_another_hotel_alura.business.dto.HuespedDTO;
 
 @SuppressWarnings("serial")
 public class Busqueda extends JFrame {
@@ -87,10 +89,6 @@ public class Busqueda extends JFrame {
 		modelo.addColumn("Valor");
 		modelo.addColumn("Forma de Pago");
 		modelo.addColumn("Número de Huesped");
-		busquedaService.getHuespedList().stream()
-			.flatMap(huesped -> huesped.getReservasDTO().stream())
-			.sorted((r1, r2) -> r1.id().compareTo(r2.id()))
-			.forEach(reserva -> modelo.addRow(reserva.getReservaRow()));
 		JScrollPane scroll_table = new JScrollPane(tbReservas);
 		panel.addTab("Reservas", new ImageIcon(Busqueda.class.getResource("/images/reservado.png")), scroll_table, null);
 		scroll_table.setVisible(true);
@@ -106,7 +104,13 @@ public class Busqueda extends JFrame {
 		modeloHuesped.addColumn("Fecha de Nacimiento");
 		modeloHuesped.addColumn("Nacionalidad");
 		modeloHuesped.addColumn("Telefono");
-		busquedaService.getHuespedList().forEach(huesped -> modeloHuesped.addRow(huesped.getHuespedRow()));
+		
+		List<HuespedDTO> huespedes = busquedaService.getHuespedesConReservas();
+		huespedes.stream()
+			.flatMap(huesped -> huesped.getReservasDTO().stream())
+			.sorted((r1, r2) -> r1.id().compareTo(r2.id()))
+			.forEach(reserva -> modelo.addRow(reserva.getReservaRow()));
+		huespedes.forEach(huesped -> modeloHuesped.addRow(huesped.getHuespedRow()));
 		
 		
 		JScrollPane scroll_tableHuespedes = new JScrollPane(tbHuespedes);
@@ -208,28 +212,26 @@ public class Busqueda extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Ejecutar búsqueda
-//				/* Vaciamos tabla reservas */
-//				int i = modelo.getRowCount();
-//				while(i > 0){
-//					modelo.removeRow(--i);
-//				}
-//				modelo.fireTableRowsDeleted(1, modelo.getRowCount());
-//				
-//				/* Vaciamos tabla huespedes */
-//				int j = modeloHuesped.getRowCount();
-//				while(j > 0){
-//					modeloHuesped.removeRow(--j);
-//				}
-//				modelo.fireTableRowsDeleted(1, modelo.getRowCount());
-//				
-//				List<ReservaDTO> reservaHuesped = reservaService.search(txtBuscar.getText());
-//				reservaHuesped.forEach(reserva -> {
-//					modelo.addRow(reserva.getReservaRow());
-//					modeloHuesped.addRow(reserva.getHuespedRow());
-//				});
-//				modelo.fireTableDataChanged();
-//				modeloHuesped.fireTableDataChanged();
+				/* Vaciamos tabla reservas */
+				int i = modelo.getRowCount();
+				while(i > 0){
+					modelo.removeRow(--i);
+				}
+				/* Vaciamos tabla huespedes */
+				int j = modeloHuesped.getRowCount();
+				while(j > 0){
+					modeloHuesped.removeRow(--j);
+				}
+				
+				List<HuespedDTO> huespedes = busquedaService.searchHuespedConReservas(txtBuscar.getText());
+				huespedes.forEach(huesped -> modeloHuesped.addRow(huesped.getHuespedRow()));
+				huespedes.stream()
+					.flatMap(huesped -> huesped.getReservasDTO().stream())
+					.sorted((r1, r2) -> r1.id().compareTo(r2.id()))
+					.forEach(reserva -> modelo.addRow(reserva.getReservaRow()));
+				
+				modelo.fireTableDataChanged();
+				modeloHuesped.fireTableDataChanged();
 			}
 		});
 		btnbuscar.setLayout(null);

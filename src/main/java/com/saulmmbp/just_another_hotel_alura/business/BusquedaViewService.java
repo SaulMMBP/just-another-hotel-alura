@@ -21,9 +21,11 @@ public class BusquedaViewService {
 		}
 	}
 
-	public List<HuespedDTO> getHuespedList() {
-		List<HuespedDTO> huespedes = new ArrayList<>();
-		huespedes = this.huespedDao.findAllWithReservas().stream().map(huesped -> new HuespedDTO(huesped)).toList();
-		return huespedes;
+	public List<HuespedDTO> getHuespedesConReservas() {
+		return this.huespedDao.findAllWithReservas().stream().map(huesped -> new HuespedDTO(huesped)).toList();
+	}
+	
+	public List<HuespedDTO> searchHuespedConReservas(String username) {
+		return this.huespedDao.findHuespedByName(username).stream().map(huesped -> new HuespedDTO(huesped)).toList();
 	}
 }
