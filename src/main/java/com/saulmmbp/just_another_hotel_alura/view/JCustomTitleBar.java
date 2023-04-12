@@ -90,6 +90,7 @@ public class JCustomTitleBar extends JPanel {
 	public void setTitle(String title) {
 		this.title = title;
 		lblTitle.setText(title);
+		lblTitle.repaint();
 	}
 
 	public ImageIcon getIcon() {
@@ -99,6 +100,7 @@ public class JCustomTitleBar extends JPanel {
 	public void setIcon(ImageIcon icon) {
 		this.icon = icon;
 		lblTitle.setIcon(icon);
+		lblTitle.repaint();
 	}
 	
 	private void titleBarMousePressed(MouseEvent event) {
