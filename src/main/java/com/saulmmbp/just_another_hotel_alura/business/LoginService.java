@@ -17,7 +17,7 @@ public class LoginService {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Error de conexión con la base de datos");
 		}
 		return false;
 	}

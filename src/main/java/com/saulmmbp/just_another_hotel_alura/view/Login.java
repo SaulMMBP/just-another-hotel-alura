@@ -5,6 +5,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import com.saulmmbp.just_another_hotel_alura.business.LoginService;
+
 public class Login extends JPanel {
 
 	private static final long serialVersionUID = -2974838587728175976L;
@@ -18,6 +20,7 @@ public class Login extends JPanel {
 	private JPasswordField fldPassword;
 	private JButton btnLogin;
 	private Image hotelImg;
+	private LoginService service;
 
 	public Login(HotelAluraGui gui) {
 		this.gui = gui;
@@ -33,6 +36,9 @@ public class Login extends JPanel {
 	 * Initialize components
 	 */
 	private void init() {
+		/* Service */
+		service = new LoginService();
+		 
 		/* add logo */
 		logo = new JLabel(new ImageIcon(getClass().getResource("/images/lOGO-50PX.png")));
 		logo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -118,7 +124,7 @@ public class Login extends JPanel {
 		
 		/* add button login */
 		btnLogin = new JButton("ENTRAR");
-		btnLogin.setFont(gui.getFont().deriveFont(12f));
+		btnLogin.setFont(gui.getFont().deriveFont(Font.BOLD, 12f));
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setBackground(Color.decode("0x0d8ac7"));
 		btnLogin.setBounds(65, 431, 122, 44);
@@ -127,7 +133,7 @@ public class Login extends JPanel {
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnLogin.setBackground(new Color(0, 120, 215));
+				btnLogin.setBackground(new Color(118, 187, 223));
 			}
 			
 			@Override
@@ -152,10 +158,16 @@ public class Login extends JPanel {
 		
 	}
 	
+	/**
+	 * Athenticate the user
+	 */
 	private void login() {
-		boolean isAuth = true;
+		boolean isAuth = service.login(fldUser.getText(), new String(fldPassword.getPassword()));
 		if(isAuth) {
-			// TODO Ir a MenuUsuario
+			gui.setPanel("menuUsuario");
+		} else {
+			JOptionPane.showMessageDialog(this, "Su usuario y/o contraseña son incorrectos", 
+					"Hotel Alura Message", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
