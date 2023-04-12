@@ -10,8 +10,10 @@ public class HotelAluraGui extends JFrame {
 	
 	private JCustomTitleBar tb;
 	private JPanel panels;
+	private Image iconImg;
 	
 	public HotelAluraGui() {
+		/* Frame Configs */
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(960, 540);
 		setResizable(false);
@@ -19,31 +21,43 @@ public class HotelAluraGui extends JFrame {
 		setLayout(null);
 		setFont(new Font("Robot", Font.PLAIN, 16));
 	
-		initComponents();
+		init();
 		
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
-	private void initComponents() {
+	/**
+	 * Initialize components
+	 */
+	private void init() {
+		/* Add panels */
 		panels = new JPanel(new CardLayout());
 		panels.setBounds(0, 0, getWidth(), getHeight());
 		panels.add("menuPrincipal", new MenuPrincipal(this));
+		panels.add("login", new Login(this));
 		add(panels);
 		
+		/* Add title bar */
 		tb = new JCustomTitleBar(this);
 		tb.setTitle("Hotel Alura");
-		Image img = new ImageIcon(getClass().getResource("/images/aH-40px.png"))
+		iconImg = new ImageIcon(getClass().getResource("/images/aH-40px.png"))
 				.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
-		tb.setIcon(new ImageIcon(img));
+		tb.setIcon(new ImageIcon(iconImg));
 		add(tb);
 		
+		/* sort components */
 		setComponentZOrder(tb, 0);
 		setComponentZOrder(panels, 1);
 	}
 	
+	/**
+	 * Change between panels
+	 * @param panelName
+	 */
 	public void setPanel(String panelName) {
 		((CardLayout) panels.getLayout()).show(panels, panelName);
+		tb.repaint();
 	}
 
 }
