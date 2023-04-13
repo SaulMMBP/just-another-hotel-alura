@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import com.saulmmbp.just_another_hotel_alura.business.LoginService;
+import com.saulmmbp.just_another_hotel_alura.controller.ServiceController;
 
 public class Login extends JPanel {
 
@@ -20,7 +20,6 @@ public class Login extends JPanel {
 	private JPasswordField fldPassword;
 	private JButton btnLogin;
 	private Image hotelImg;
-	private LoginService service;
 
 	public Login(HotelAluraGui gui) {
 		this.gui = gui;
@@ -36,9 +35,6 @@ public class Login extends JPanel {
 	 * Initialize components
 	 */
 	private void init() {
-		/* Service */
-		service = new LoginService();
-		 
 		/* add logo */
 		logo = new JLabel(new ImageIcon(getClass().getResource("/images/lOGO-50PX.png")));
 		logo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -120,6 +116,14 @@ public class Login extends JPanel {
 				}
 			}
 		});
+		fldPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(e.getKeyChar() == '\n') {
+					login();
+				}
+			}
+		});
 		add(fldPassword);
 		
 		/* add button login */
@@ -162,7 +166,7 @@ public class Login extends JPanel {
 	 * Athenticate the user
 	 */
 	private void login() {
-		boolean isAuth = service.login(fldUser.getText(), new String(fldPassword.getPassword()));
+		boolean isAuth = ServiceController.login(fldUser.getText(), new String(fldPassword.getPassword()));
 		if(isAuth) {
 			gui.setPanel("menuUsuario");
 		} else {

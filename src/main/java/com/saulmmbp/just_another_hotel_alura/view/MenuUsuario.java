@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.*;
-import javax.swing.text.*;
 
 public class MenuUsuario extends JPanel {
 
@@ -87,7 +86,7 @@ public class MenuUsuario extends JPanel {
 		btnSearch.setBorderPainted(false);
 		btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnSearch.setForeground(Color.WHITE);
-		btnSearch.setFont(getFont().deriveFont(18f));
+		btnSearch.setFont(gui.getFont().deriveFont(18f));
 		btnSearch.setBounds(0, 312, 257, 56);
 		btnSearch.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSearch.addMouseListener(new MouseAdapter() {
@@ -108,7 +107,7 @@ public class MenuUsuario extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO ir a Search View
+				gui.setPanel("busqueda");
 			}
 		});
 		add(btnSearch);
@@ -116,7 +115,7 @@ public class MenuUsuario extends JPanel {
 		/* Add header */
 		txtHeader = new JTextPane();
 		txtHeader.setOpaque(false);
-		txtHeader.setFont(getFont().deriveFont(24f));
+		txtHeader.setFont(gui.getFont().deriveFont(24f));
 		txtHeader.setForeground(Color.WHITE);
 		txtHeader.setBounds(257, 84, gui.getWidth() - 257, 121);
 		txtHeader.setContentType("text/html");

@@ -37,6 +37,7 @@ public class HotelAluraGui extends JFrame {
 		panels.add("menuPrincipal", new MenuPrincipal(this));
 		panels.add("login", new Login(this));
 		panels.add("menuUsuario", new MenuUsuario(this));
+		panels.add("busqueda", new Busqueda(this));
 		add(panels);
 		
 		/* Add title bar */

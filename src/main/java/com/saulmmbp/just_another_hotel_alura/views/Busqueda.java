@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.saulmmbp.just_another_hotel_alura.business.BusquedaViewService;
+import com.saulmmbp.just_another_hotel_alura.business.HuespedService;
 import com.saulmmbp.just_another_hotel_alura.business.dto.HuespedDTO;
 
 @SuppressWarnings("serial")
@@ -24,7 +24,7 @@ public class Busqueda extends JFrame {
 	private JLabel labelExit;
 	int xMouse, yMouse;
 	
-	private BusquedaViewService busquedaService = new BusquedaViewService();
+	private HuespedService busquedaService = new HuespedService();
 
 	/**
 	 * Launch the application.
@@ -105,12 +105,12 @@ public class Busqueda extends JFrame {
 		modeloHuesped.addColumn("Nacionalidad");
 		modeloHuesped.addColumn("Telefono");
 		
-		List<HuespedDTO> huespedes = busquedaService.getHuespedesConReservas();
-		huespedes.stream()
-			.flatMap(huesped -> huesped.getReservasDTO().stream())
-			.sorted((r1, r2) -> r1.id().compareTo(r2.id()))
-			.forEach(reserva -> modelo.addRow(reserva.getReservaRow()));
-		huespedes.forEach(huesped -> modeloHuesped.addRow(huesped.getHuespedRow()));
+//		List<HuespedDTO> huespedes = busquedaService.getHuespedesConReservas();
+//		huespedes.stream()
+//			.flatMap(huesped -> huesped.getReservasDTO().stream())
+//			.sorted((r1, r2) -> r1.id().compareTo(r2.id()))
+//			.forEach(reserva -> modelo.addRow(reserva.getReservaRow()));
+//		huespedes.forEach(huesped -> modeloHuesped.addRow(huesped.getHuespedRow()));
 		
 		
 		JScrollPane scroll_tableHuespedes = new JScrollPane(tbHuespedes);
@@ -223,13 +223,13 @@ public class Busqueda extends JFrame {
 					modeloHuesped.removeRow(--j);
 				}
 				
-				List<HuespedDTO> huespedes = busquedaService.searchHuespedConReservas(txtBuscar.getText());
-				huespedes.forEach(huesped -> modeloHuesped.addRow(huesped.getHuespedRow()));
-				huespedes.stream()
-					.flatMap(huesped -> huesped.getReservasDTO().stream())
-					.sorted((r1, r2) -> r1.id().compareTo(r2.id()))
-					.forEach(reserva -> modelo.addRow(reserva.getReservaRow()));
-				
+//				List<HuespedDTO> huespedes = busquedaService.searchHuespedConReservas(txtBuscar.getText());
+//				huespedes.forEach(huesped -> modeloHuesped.addRow(huesped.getHuespedRow()));
+//				huespedes.stream()
+//					.flatMap(huesped -> huesped.getReservasDTO().stream())
+//					.sorted((r1, r2) -> r1.id().compareTo(r2.id()))
+//					.forEach(reserva -> modelo.addRow(reserva.getReservaRow()));
+//				
 				modelo.fireTableDataChanged();
 				modeloHuesped.fireTableDataChanged();
 			}

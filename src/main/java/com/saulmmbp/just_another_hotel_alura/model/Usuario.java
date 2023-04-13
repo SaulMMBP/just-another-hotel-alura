@@ -5,20 +5,6 @@ public class Usuario {
 	private Long id;
 	private String username;
 	private String password;
-	
-	public Usuario() {
-	}
-	
-	public Usuario(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
-
-	public Usuario(Long id, String username, String password) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-	}
 
 	public Long getId() {
 		return id;

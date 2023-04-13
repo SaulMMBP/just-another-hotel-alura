@@ -3,6 +3,7 @@ package com.saulmmbp.just_another_hotel_alura.views;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -237,6 +238,7 @@ public class ReservasView extends JFrame {
 		txtFechaEntrada.setBorder(new LineBorder(SystemColor.window));
 		txtFechaEntrada.setDateFormatString("yyyy-MM-dd");
 		txtFechaEntrada.setFont(new Font("Roboto", Font.PLAIN, 18));
+		txtFechaEntrada.setMinSelectableDate(new Date());
 		panel.add(txtFechaEntrada);
 
 		txtFechaSalida = new JDateChooser();
@@ -254,6 +256,7 @@ public class ReservasView extends JFrame {
 		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
 		txtFechaSalida.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaSalida.setBorder(new LineBorder(new Color(255, 255, 255), 0));
+		txtFechaSalida.setMinSelectableDate(new Date());
 		panel.add(txtFechaSalida);
 
 		txtValor = new JTextField();

@@ -18,14 +18,11 @@ class HuespedDaoImplTest {
 		List<Huesped> huespedes = new ArrayList<>();
 		try(Connection conn = MySqlConnection.getConnection()) {
 			HuespedDaoImpl dao = new HuespedDaoImpl(conn);
-			huespedes = dao.findAllWithReservas();
+			huespedes = dao.findAll();
 		} catch (SQLException e) {
 			fail(e.getMessage());
 		}
 		assertTrue(huespedes.size() > 1);
-		huespedes.forEach(huesped -> {
-			assertTrue(huesped.getReservas().size() > 0);
-		});
 	}
 
 }

@@ -1,18 +1,18 @@
 package com.saulmmbp.just_another_hotel_alura.business.dto;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
 
 import com.saulmmbp.just_another_hotel_alura.model.*;
 
 public record HuespedDTO(Long id, String nombre, String apellido, LocalDate fechaNacimiento, Nacionalidad nacionalidad,
-		String telefono, List<Reserva> reservas) {
+		String telefono, List<Reserva> reservas) implements Dto {
 	public HuespedDTO(Huesped huesped) {
 		this(huesped.getId(), huesped.getNombre(), huesped.getApellido(), huesped.getFechaNacimiento(),
 				huesped.getNacionalidad(), huesped.getTelefono(), huesped.getReservas());
 	}
 
-	public String[] getHuespedRow() {
+	public String[] getRow() {
 		return new String[] { String.valueOf(this.id), this.nombre, this.apellido, this.fechaNacimiento.toString(),
 				this.nacionalidad.toString(), this.telefono };
 	}
