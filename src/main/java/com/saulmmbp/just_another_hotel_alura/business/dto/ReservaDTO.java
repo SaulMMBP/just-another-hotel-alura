@@ -14,7 +14,7 @@ public record ReservaDTO(Long id, LocalDateTime fechaEntrada, LocalDateTime fech
 	}
 	
 	public String[] getRow() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy - HH:mm:ss");
 		return new String[] { String.valueOf(this.id), this.fechaEntrada.format(formatter), this.fechaSalida.format(formatter), this.valor.toPlainString(),
 				this.formaPago, String.valueOf(this.huesped_id) };
 	}

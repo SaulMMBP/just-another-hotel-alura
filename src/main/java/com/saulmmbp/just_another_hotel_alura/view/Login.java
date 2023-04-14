@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import com.saulmmbp.just_another_hotel_alura.controller.ServiceController;
+import com.saulmmbp.just_another_hotel_alura.business.LoginService;
 
 public class Login extends JPanel {
 
@@ -154,7 +154,7 @@ public class Login extends JPanel {
 	 * Athenticate the user
 	 */
 	private void login() {
-		boolean isAuth = ServiceController.login(fldUser.getText(), new String(fldPassword.getPassword()));
+		boolean isAuth = LoginService.login(fldUser.getText(), new String(fldPassword.getPassword()));
 		if(isAuth) {
 			gui.setPanel("menuUsuario");
 		} else {

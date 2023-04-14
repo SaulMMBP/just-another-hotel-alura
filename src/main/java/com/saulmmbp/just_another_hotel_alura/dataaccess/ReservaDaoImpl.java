@@ -1,6 +1,7 @@
 package com.saulmmbp.just_another_hotel_alura.dataaccess;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.swing.JOptionPane;
@@ -29,5 +30,44 @@ public class ReservaDaoImpl implements ReservaDao {
 		}
 		return reservas;
 	}
+
+	@Override
+	public Reserva findById(Long id) {
+		Reserva reserva = null;
+		try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM reservas WHERE id_reserva=?")) {
+			stmt.setLong(1, id);
+			try(ResultSet rs = stmt.executeQuery()) {
+				if(rs.next()) {
+					reserva = new Reserva(rs);
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return reserva;
+	}
+
+	@Override
+	public List<Reserva> findByDate(LocalDateTime fecha) {
+		List<Reserva> reservas = new ArrayList<>();
+		try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM reservas WHERE fecha_entrada BETWEEN ? AND ?")) {
+			stmt.setTimestamp(1, Timestamp.valueOf(fecha));
+			stmt.setTimestamp(2, Timestamp.valueOf(fecha.plusDays(1)));
+			try(ResultSet rs = stmt.executeQuery()) {
+				while(rs.next()) {
+					reservas.add(new Reserva(rs));
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return reservas;
+	}
+	
+	
+	
+	
 
 }

@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.saulmmbp.just_another_hotel_alura.business.HuespedService;
+import com.saulmmbp.just_another_hotel_alura.business.BusquedaService;
 import com.saulmmbp.just_another_hotel_alura.business.dto.HuespedDTO;
 
 @SuppressWarnings("serial")
@@ -24,7 +24,7 @@ public class Busqueda extends JFrame {
 	private JLabel labelExit;
 	int xMouse, yMouse;
 	
-	private HuespedService busquedaService = new HuespedService();
+	private BusquedaService busquedaService = new BusquedaService();
 
 	/**
 	 * Launch the application.

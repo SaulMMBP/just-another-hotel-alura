@@ -42,16 +42,16 @@ INSERT INTO usuarios(username, password) VALUES ('admin', '1234');
 # Insertamos huespedes ejemplo
 INSERT INTO `huespedes` (`nombre`,`apellido`,`fecha_nacimiento`,`nacionalidad`,`telefono`)
 VALUES
-  ("Kareem Collins","Moran","2004-02-06","Afghanistan","1-555-438-1458"),
-  ("Clarke Harris","Giles","1996-11-10","Azerbaijan","1-425-759-8849"),
-  ("Wyatt Monroe","Garza","1996-09-11","Cyprus","1-566-789-5888"),
-  ("Curran Graves","Hayes","2000-03-19","Finland","1-712-431-8688"),
-  ("Donovan Guy","Campos","2002-06-01","Germany","(625) 672-5735"),
-  ("Alisa Anthony","Pace","1999-10-13","Germany","1-950-766-9242"),
-  ("Dean Ferrell","Mcgowan","1998-05-23","Germany","(443) 842-3577"),
-  ("Nina Peck","Atkinson","1999-12-14","France","1-565-753-0159"),
-  ("Nichole Morris","Maynard","2002-10-31","France","1-682-373-2681"),
-  ("Lunea Robbins","Wagner","2004-03-07","Kuwait","(771) 812-7481");
+  ("Kareem","Moran","2004-02-06","Afghanistan","1-555-438-1458"),
+  ("Clarke","Giles","1996-11-10","Azerbaijan","1-425-759-8849"),
+  ("Wyatt","Garza","1996-09-11","Cyprus","1-566-789-5888"),
+  ("Curran","Hayes","2000-03-19","Finland","1-712-431-8688"),
+  ("Donovan","Campos","2002-06-01","Germany","(625) 672-5735"),
+  ("Alisa","Pace","1999-10-13","Germany","1-950-766-9242"),
+  ("Dean","Mcgowan","1998-05-23","Germany","(443) 842-3577"),
+  ("Nina","Atkinson","1999-12-14","France","1-565-753-0159"),
+  ("Nichole","Maynard","2002-10-31","France","1-682-373-2681"),
+  ("Lunea","Wagner","2004-03-07","Kuwait","(771) 812-7481");
   
 # Insertamos reservas de ejemplo
 INSERT INTO `reservas` (`fecha_entrada`,`fecha_salida`,`valor`,`forma_pago`,`huesped_id`)

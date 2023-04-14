@@ -1,6 +1,7 @@
 package com.saulmmbp.just_another_hotel_alura.business.dto;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.saulmmbp.just_another_hotel_alura.model.*;
@@ -13,7 +14,8 @@ public record HuespedDTO(Long id, String nombre, String apellido, LocalDate fech
 	}
 
 	public String[] getRow() {
-		return new String[] { String.valueOf(this.id), this.nombre, this.apellido, this.fechaNacimiento.toString(),
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		return new String[] { String.valueOf(this.id), this.nombre, this.apellido, this.fechaNacimiento.format(formatter),
 				this.nacionalidad.toString(), this.telefono };
 	}
 	

@@ -8,6 +8,6 @@ public interface HuespedDao {
 
 	List<Huesped> findAll();
 	
-	List<Huesped> findHuespedByName(String username);
+	List<Huesped> findHuespedByNombreApellido(String username);
 	
 }

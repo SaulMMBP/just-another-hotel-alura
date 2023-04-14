@@ -30,10 +30,11 @@ public class HuespedDaoImpl implements HuespedDao {
 	}
 
 	@Override
-	public List<Huesped> findHuespedByName(String huespedName) {
+	public List<Huesped> findHuespedByNombreApellido(String keyword) {
 		List<Huesped> huespedes = new ArrayList<>();
-		try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM huespedes WHERE nombre LIKE ?")) {
-			stmt.setString(1, "%" + huespedName + "%");
+		try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM huespedes WHERE nombre LIKE ? OR apellido LIKE ?")) {
+			stmt.setString(1, "%" + keyword + "%");
+			stmt.setString(2, "%" + keyword + "%");
 			try (ResultSet rs = stmt.executeQuery()) {
 				while (rs.next()) {
 					huespedes.add(new Huesped(rs));

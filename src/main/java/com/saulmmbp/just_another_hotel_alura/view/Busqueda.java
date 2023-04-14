@@ -7,8 +7,8 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import com.saulmmbp.just_another_hotel_alura.business.BusquedaService;
 import com.saulmmbp.just_another_hotel_alura.business.dto.*;
-import com.saulmmbp.just_another_hotel_alura.controller.ServiceController;
 
 public class Busqueda extends JPanel {
 
@@ -21,6 +21,7 @@ public class Busqueda extends JPanel {
 	private JButton btnSearch;
 	private JButton btnEdit;
 	private JButton btnDelete;
+	private JButton btnDetails;
 	private JTabbedPane tabbedPane;
 	private JScrollPane scrtbReservas;
 	private JScrollPane scrtbHuespedes;
@@ -28,13 +29,12 @@ public class Busqueda extends JPanel {
 	private JTable tbHuespedes;
 	private DefaultTableModel mdlReservas;
 	private DefaultTableModel mdlHuespedes;
-	private final String[] tbhdReservas = new String[] { "Id", "Fecha de entrada", "Fecha de salida", "Valor",
-			"Forma de pago", "Huesped Id" };
-	private final String[] tbhdHuespedes = new String[] { "Id", "Nombre", "Apellido", "Fecha de nacimiento",
-			"Nacionalidad", "telefono" };
-
 	private List<HuespedDTO> huespedes;
 	private List<ReservaDTO> reservas;
+	private final String[] tbhdReservas = new String[] { "Número", "Fecha de entrada", "Fecha de salida", "Valor",
+			"Forma de pago", "Huesped Id" };
+	private final String[] tbhdHuespedes = new String[] { "Número", "Nombre", "Apellido", "Fecha de nacimiento",
+			"Nacionalidad", "telefono" };
 
 	public Busqueda(MainFrame gui) {
 		this.gui = gui;
@@ -49,9 +49,8 @@ public class Busqueda extends JPanel {
 	 * Initialize components
 	 */
 	public void init() {
-		/* Get data */
-		huespedes = ServiceController.getHuespedes();
-		reservas = ServiceController.getReservas();
+		huespedes = BusquedaService.getHuespedes();
+		reservas = BusquedaService.getReservas();
 
 		/* add header */
 		lblHeader = new JLabel("SISTEMA DE BÚSQUEDA");
@@ -68,6 +67,14 @@ public class Busqueda extends JPanel {
 		fldSearch.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(12, 138, 199)));
 		fldSearch.setForeground(Color.LIGHT_GRAY);
 		fldSearch.setText("Ingrese busqueda");
+		fldSearch.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(e.getKeyChar() == '\n') {
+					search();
+				}
+			}
+		});
 		fldSearch.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -95,8 +102,7 @@ public class Busqueda extends JPanel {
 		btnSearch.setBounds(gui.getWidth() - 160, 125, 128, 32);
 		btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnSearch.addActionListener(e -> {
-			huespedes = ServiceController.searchHuesped(fldSearch.getText());
-			fillTable(mdlHuespedes, huespedes, tbhdHuespedes);
+			search();
 		});
 		add(btnSearch);
 
@@ -109,12 +115,6 @@ public class Busqueda extends JPanel {
 		/* add reservas table */
 		tbReservas = new JTable();
 		mdlReservas = (DefaultTableModel) tbReservas.getModel();
-		mdlReservas.addColumn("Id");
-		mdlReservas.addColumn("Entrada");
-		mdlReservas.addColumn("Salida");
-		mdlReservas.addColumn("Valor");
-		mdlReservas.addColumn("Forma de pago");
-		mdlReservas.addColumn("Huesped id");
 		fillTable(mdlReservas, reservas, tbhdReservas);
 		scrtbReservas = new JScrollPane(tbReservas);
 		tabbedPane.addTab("Reservas", new ImageIcon(getClass().getResource("/images/reservado.png")), scrtbReservas);
@@ -141,6 +141,14 @@ public class Busqueda extends JPanel {
 		btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnDelete.addActionListener(e -> {/* TODO implementar acción */});
 		add(btnDelete);
+		
+		/* add detalles button */
+		btnDetails = new JButton("DETALLES");
+		btnDetails.setBackground(new Color(12, 138, 199));
+		btnDetails.setBounds(gui.getWidth() - 480, gui.getHeight() - 64, 128, 32);
+		btnDetails.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnDetails.addActionListener(e -> {/* TODO implementar acción */});
+		add(btnDetails);
 
 	}
 
@@ -156,6 +164,20 @@ public class Busqueda extends JPanel {
 		model.setDataVector(null, columns);
 		rows.forEach(row -> model.addRow(row.getRow()));
 		model.fireTableDataChanged();
+	}
+	
+	private void search() {
+		String keyword = fldSearch.getText().trim();
+		if(tabbedPane.getSelectedIndex() == 1 && !fldSearch.getText().equals("Ingrese busqueda")) {
+			huespedes = BusquedaService.searchHuesped(keyword);
+		} else if (tabbedPane.getSelectedIndex() == 0 && !fldSearch.getText().equals("Ingrese busqueda")) {
+			reservas = BusquedaService.searchReserva(keyword);
+		} else {
+			huespedes = BusquedaService.getHuespedes();
+			reservas = BusquedaService.getReservas();
+		}
+		fillTable(mdlHuespedes, huespedes, tbhdHuespedes);
+		fillTable(mdlReservas, reservas, tbhdReservas);
 	}
 
 }
