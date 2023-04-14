@@ -96,7 +96,7 @@ public class MenuUsuario extends JFrame {
 		btnRegistro.setLayout(null);
 		
 		labelRegistro = new JLabel("Registro de reservas");
-		labelRegistro.setIcon(new ImageIcon(MenuUsuario.class.getResource("/images/reservado.png")));
+		labelRegistro.setIcon(new ImageIcon(MenuUsuario.class.getResource("/images/reservado-white.png")));
 		labelRegistro.setForeground(SystemColor.text);
 		labelRegistro.setBounds(25, 11, 205, 34);
 		labelRegistro.setFont(new Font("Roboto", Font.PLAIN, 18));

@@ -11,7 +11,7 @@ public class Login extends JPanel {
 
 	private static final long serialVersionUID = -2974838587728175976L;
 
-	private HotelAluraGui gui;
+	private MainFrame gui;
 	private JLabel logo;
 	private JLabel lblHeader;
 	private JLabel lblUser;
@@ -20,8 +20,10 @@ public class Login extends JPanel {
 	private JPasswordField fldPassword;
 	private JButton btnLogin;
 	private Image hotelImg;
+	
+	private final Color BLUE = new Color(12, 138, 199);
 
-	public Login(HotelAluraGui gui) {
+	public Login(MainFrame gui) {
 		this.gui = gui;
 		
 		/* Panel configs */
@@ -43,21 +45,21 @@ public class Login extends JPanel {
 		
 		/* add header */
 		lblHeader = new JLabel("INICIAR SESIÓN");
-		lblHeader.setFont(gui.getFont().deriveFont(26f));
+		lblHeader.setFont(getFont().deriveFont(Font.BOLD, 20f));
 		lblHeader.setBounds(65, 149, 400, 26);
-		lblHeader.setForeground(Color.decode("0x0d8ac7"));
+		lblHeader.setForeground(BLUE);
 		add(lblHeader);
 		
 		/* add Usuario label */
 		lblUser = new JLabel("USUARIO");
 		lblUser.setForeground(Color.GRAY);
-		lblUser.setFont(gui.getFont().deriveFont(20f));
+		lblUser.setFont(getFont().deriveFont(20f));
 		lblUser.setBounds(65, 219, 400, 26);
 		add(lblUser);
 		
 		/* add usuario field */
 		fldUser = new JTextField();
-		fldUser.setFont(gui.getFont().deriveFont(12f));
+		fldUser.setFont(getFont().deriveFont(12f));
 		fldUser.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.decode("0x0d8ac7")));
 		fldUser.setForeground(Color.LIGHT_GRAY);
 		fldUser.setBounds(65, 256, 324, 32);
@@ -86,7 +88,7 @@ public class Login extends JPanel {
 		/* add password label */
 		lblPassword = new JLabel("CONTRASEÑA");
 		lblPassword.setForeground(Color.GRAY);
-		lblPassword.setFont(gui.getFont().deriveFont(20f));
+		lblPassword.setFont(getFont().deriveFont(20f));
 		lblPassword.setBounds(65, 316, 140, 26);
 		add(lblPassword);
 		
@@ -94,7 +96,7 @@ public class Login extends JPanel {
 		fldPassword = new JPasswordField();
 		fldPassword.setBounds(65, 353, 324, 32);
 		fldPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.decode("0x0d8ac7")));
-		fldPassword.setFont(gui.getFont().deriveFont(12f));
+		fldPassword.setFont(getFont().deriveFont(12f));
 		fldPassword.setText("**********");
 		fldPassword.setForeground(Color.LIGHT_GRAY);
 		fldPassword.addFocusListener(new FocusAdapter() {
@@ -128,23 +130,9 @@ public class Login extends JPanel {
 		
 		/* add button login */
 		btnLogin = new JButton("ENTRAR");
-		btnLogin.setFont(gui.getFont().deriveFont(Font.BOLD, 12f));
-		btnLogin.setForeground(Color.WHITE);
-		btnLogin.setBackground(Color.decode("0x0d8ac7"));
+		btnLogin.setBackground(new Color(12, 138, 199));
 		btnLogin.setBounds(65, 431, 122, 44);
 		btnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnLogin.setBorderPainted(false);
-		btnLogin.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnLogin.setBackground(new Color(118, 187, 223));
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnLogin.setBackground(Color.decode("0x0d8ac7"));
-			}
-		});
 		btnLogin.addActionListener(event -> login());
 		add(btnLogin);
 	}

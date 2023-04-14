@@ -6,9 +6,9 @@ public class ReservasView extends JPanel {
 
 	private static final long serialVersionUID = 927916308390769110L;
 
-	private HotelAluraGui gui;
+	private MainFrame gui;
 
-	public ReservasView(HotelAluraGui gui) {
+	public ReservasView(MainFrame gui) {
 		this.gui = gui;
 	}
 	

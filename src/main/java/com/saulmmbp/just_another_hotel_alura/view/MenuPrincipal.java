@@ -8,14 +8,14 @@ public class MenuPrincipal extends JPanel {
 
 	private static final long serialVersionUID = -7295880406625492439L;
 	
-	private HotelAluraGui gui;
+	private MainFrame gui;
 	private JLabel lblCopyright;
 	private JLabel lblHeader;
 	private JLabel logo;
 	private JButton btnLogin;
 	private Image bgImg;
 	
-	public MenuPrincipal(HotelAluraGui gui) {
+	public MenuPrincipal(MainFrame gui) {
 		this.gui = gui;
 		
 		/* Panel configs */
@@ -30,7 +30,6 @@ public class MenuPrincipal extends JPanel {
 	private void init() {
 		/* add copyright label */
 		lblCopyright = new JLabel("Desarrollado por Saul Malagon Martinez © 2023");
-		lblCopyright.setFont(gui.getFont().deriveFont(12f));
 		lblCopyright.setBounds(0, gui.getHeight() - 32, gui.getWidth(), 32);
 		lblCopyright.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCopyright.setForeground(Color.WHITE);
@@ -43,10 +42,10 @@ public class MenuPrincipal extends JPanel {
 		
 		/* add header */
 		lblHeader = new JLabel("LOGIN");
+		lblHeader.setFont(getFont().deriveFont(Font.BOLD, 20f));
 		lblHeader.setBounds((gui.getWidth() / 4) * 3, gui.getHeight() / 2, gui.getWidth() / 4, 24);
 		lblHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHeader.setForeground(Color.decode("0x0d8ac7"));
-		lblHeader.setFont(gui.getFont().deriveFont(Font.BOLD, 20));
 		add(lblHeader);
 		
 		/* add login button */

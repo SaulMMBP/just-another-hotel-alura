@@ -1,7 +1,6 @@
 package com.saulmmbp.just_another_hotel_alura.view;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,7 +10,7 @@ public class MenuUsuario extends JPanel {
 
 	private static final long serialVersionUID = -1820063700734725906L;
 
-	private HotelAluraGui gui;
+	private MainFrame gui;
 	private JSeparator separator;
 	private JButton btnReg;
 	private JButton btnSearch;
@@ -19,7 +18,7 @@ public class MenuUsuario extends JPanel {
 	private JTextPane txtBody;
 	private Image logoImg;
 
-	public MenuUsuario(HotelAluraGui gui) {
+	public MenuUsuario(MainFrame gui) {
 		this.gui = gui;
 		
 		/* Panel configs */
@@ -40,82 +39,31 @@ public class MenuUsuario extends JPanel {
 		
 		/* add button for registries view */
 		btnReg = new JButton();
+		btnReg.setBackground(new Color(12, 138, 199));
 		btnReg.setText("Registro de reservas");
 		btnReg.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass()
-				.getResource("/images/reservado.png"))));
-		btnReg.setIconTextGap(10);
-		btnReg.setOpaque(false);
-		btnReg.setContentAreaFilled(false);
-		btnReg.setBorderPainted(false);
+				.getResource("/images/reservado-white.png"))));
 		btnReg.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnReg.setForeground(Color.WHITE);
-		btnReg.setFont(getFont().deriveFont(18f));
 		btnReg.setBounds(0, 255, 257, 56);
 		btnReg.setHorizontalAlignment(SwingConstants.LEFT);
-		btnReg.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				JButton btn = (JButton) e.getComponent();
-				btn.setOpaque(true);
-				btn.setContentAreaFilled(true);
-				btn.setBackground(new Color(118, 187, 223));
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				JButton btn = (JButton) e.getComponent();
-				btn.setOpaque(false);
-				btn.setContentAreaFilled(false);
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO ir a Reservas View
-			}
-		});
+		btnReg.addActionListener(e -> {/* TODO implementar acción */});
 		add(btnReg);
 		
 		/* add button for search */
 		btnSearch = new JButton();
+		btnSearch.setBackground(new Color(12, 138, 199));
 		btnSearch.setText("Búsqueda");
 		btnSearch.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass()
 				.getResource("/images/pessoas.png"))));
-		btnSearch.setIconTextGap(10);
-		btnSearch.setOpaque(false);
-		btnSearch.setContentAreaFilled(false);
-		btnSearch.setBorderPainted(false);
 		btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnSearch.setForeground(Color.WHITE);
-		btnSearch.setFont(gui.getFont().deriveFont(18f));
 		btnSearch.setBounds(0, 312, 257, 56);
 		btnSearch.setHorizontalAlignment(SwingConstants.LEFT);
-		btnSearch.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				JButton btn = (JButton) e.getComponent();
-				btn.setOpaque(true);
-				btn.setContentAreaFilled(true);
-				btn.setBackground(new Color(118, 187, 223));
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				JButton btn = (JButton) e.getComponent();
-				btn.setOpaque(false);
-				btn.setContentAreaFilled(false);
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				gui.setPanel("busqueda");
-			}
-		});
+		btnSearch.addActionListener(e -> gui.setPanel("busqueda"));
 		add(btnSearch);
 		
 		/* Add header */
 		txtHeader = new JTextPane();
 		txtHeader.setOpaque(false);
-		txtHeader.setFont(gui.getFont().deriveFont(24f));
 		txtHeader.setForeground(Color.WHITE);
 		txtHeader.setBounds(257, 84, gui.getWidth() - 257, 121);
 		txtHeader.setContentType("text/html");
