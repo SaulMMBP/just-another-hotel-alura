@@ -2,6 +2,8 @@ package com.saulmmbp.just_another_hotel_alura.view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDateTime;
+import java.time.format.*;
 import java.util.List;
 
 import javax.swing.*;
@@ -95,7 +97,7 @@ public class Busqueda extends JPanel {
 			}
 		});
 		add(fldSearch);
-
+		
 		/* add search button */
 		btnSearch = new JButton("BUSCAR");
 		btnSearch.setBackground(new Color(12, 138, 199));
@@ -149,32 +151,58 @@ public class Busqueda extends JPanel {
 		btnDetails.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnDetails.addActionListener(e -> {/* TODO implementar acción */});
 		add(btnDetails);
+		
 
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		/* Draw the hotel alura logo */
 		imgLogo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Ha-100px.png"));
 		g.drawImage(imgLogo, 64, 32, this);
 
 	}
 
+	/**
+	 * fill a table model with data
+	 * @param model
+	 * @param rows
+	 * @param columns
+	 */
 	private void fillTable(DefaultTableModel model, List<? extends Dto> rows, String[] columns) {
 		model.setDataVector(null, columns);
 		rows.forEach(row -> model.addRow(row.getRow()));
 		model.fireTableDataChanged();
 	}
 	
+	/**
+	 * execute a serach
+	 */
 	private void search() {
 		String keyword = fldSearch.getText().trim();
-		if(tabbedPane.getSelectedIndex() == 1 && !fldSearch.getText().equals("Ingrese busqueda")) {
-			huespedes = BusquedaService.searchHuesped(keyword);
-		} else if (tabbedPane.getSelectedIndex() == 0 && !fldSearch.getText().equals("Ingrese busqueda")) {
-			reservas = BusquedaService.searchReserva(keyword);
-		} else {
-			huespedes = BusquedaService.getHuespedes();
-			reservas = BusquedaService.getReservas();
+		try {
+			if(tabbedPane.getSelectedIndex() == 1 && !fldSearch.getText().equals("Ingrese busqueda")) {
+				if (keyword.chars().allMatch(Character::isDigit)) {
+					Long idHuesped = Long.parseLong(keyword);
+					huespedes = BusquedaService.searchHuesped(idHuesped);
+				} else {
+					huespedes = BusquedaService.searchHuesped(keyword);
+				}
+			} else if (tabbedPane.getSelectedIndex() == 0 && !fldSearch.getText().equals("Ingrese busqueda")) {
+				if (keyword.chars().allMatch(Character::isDigit)) {
+					Long idReserva = Long.parseLong(keyword);
+					reservas = BusquedaService.searchReserva(idReserva);
+				} else if (keyword.matches("\\d{2}/\\d{2}/\\d+")) {
+					LocalDateTime fechaEntrada = LocalDateTime.parse(keyword + " - 00:00:00", DateTimeFormatter.ofPattern("d/MM/yyyy - HH:mm:ss"));
+					reservas = BusquedaService.searchReserva(fechaEntrada);
+				}
+			} else {
+				huespedes = BusquedaService.getHuespedes();
+				reservas = BusquedaService.getReservas();
+			}
+		} catch (NumberFormatException | DateTimeParseException e) {
+			JOptionPane.showMessageDialog(this, "El Término ingresado es incorrecto", "Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
 		}
 		fillTable(mdlHuespedes, huespedes, tbhdHuespedes);
 		fillTable(mdlReservas, reservas, tbhdReservas);

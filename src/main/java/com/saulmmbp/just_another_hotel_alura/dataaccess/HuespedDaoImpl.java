@@ -15,6 +15,9 @@ public class HuespedDaoImpl implements HuespedDao {
 		this.conn = conn;
 	}
 
+	/**
+	 * Return all the guests from the data base
+	 */
 	@Override
 	public List<Huesped> findAll() {
 		List<Huesped> huespedes = new ArrayList<>();
@@ -23,12 +26,16 @@ public class HuespedDaoImpl implements HuespedDao {
 				huespedes.add(new Huesped(rs));
 			}
 		} catch (SQLException e) {
+			System.err.println(e.getMessage() + ":" + e.getCause());
 			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return huespedes;
 	}
 
+	/**
+	 * Return a guest in the data base where name or lastname is the keyword 
+	 */
 	@Override
 	public List<Huesped> findHuespedByNombreApellido(String keyword) {
 		List<Huesped> huespedes = new ArrayList<>();
@@ -41,9 +48,32 @@ public class HuespedDaoImpl implements HuespedDao {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage() + ":" + e.getCause());
+			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 		return huespedes;
+	}
+
+	/**
+	 * Return a guest with the id indicated
+	 */
+	@Override
+	public Huesped findById(Long id) {
+		Huesped huesped = null;
+		try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM huespedes WHERE id_huesped=?")) {
+			stmt.setLong(1, id);
+			try(ResultSet rs = stmt.executeQuery()) {
+				if(rs.next()) {
+					huesped = new Huesped(rs);
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println(e.getMessage() + ":" + e.getCause());
+			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return huesped;
 	}
 
 }
