@@ -2,14 +2,12 @@ package com.saulmmbp.just_another_hotel_alura.views;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.saulmmbp.just_another_hotel_alura.business.BusquedaService;
-import com.saulmmbp.just_another_hotel_alura.business.dto.HuespedDTO;
 
 @SuppressWarnings("serial")
 public class Busqueda extends JFrame {
@@ -24,8 +22,6 @@ public class Busqueda extends JFrame {
 	private JLabel labelExit;
 	int xMouse, yMouse;
 	
-	private BusquedaService busquedaService = new BusquedaService();
-
 	/**
 	 * Launch the application.
 	 */
@@ -76,9 +72,6 @@ public class Busqueda extends JFrame {
 		panel.setBounds(20, 169, 865, 328);
 		contentPane.add(panel);
 
-		
-		
-		
 		tbReservas = new JTable();
 		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
@@ -92,7 +85,6 @@ public class Busqueda extends JFrame {
 		JScrollPane scroll_table = new JScrollPane(tbReservas);
 		panel.addTab("Reservas", new ImageIcon(Busqueda.class.getResource("/images/reservado.png")), scroll_table, null);
 		scroll_table.setVisible(true);
-		
 		
 		tbHuespedes = new JTable();
 		tbHuespedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

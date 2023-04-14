@@ -64,6 +64,7 @@ public class Busqueda extends JPanel {
 
 		/* add search field */
 		fldSearch = new JTextField();
+		fldSearch.putClientProperty("JTextField.showClearButton", true);
 		fldSearch.setFont(getFont().deriveFont(12f));
 		fldSearch.setBounds(536, 127, 256, 32);
 		fldSearch.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(12, 138, 199)));
@@ -151,8 +152,6 @@ public class Busqueda extends JPanel {
 		btnDetails.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnDetails.addActionListener(e -> {/* TODO implementar acción */});
 		add(btnDetails);
-		
-
 	}
 
 	@Override
