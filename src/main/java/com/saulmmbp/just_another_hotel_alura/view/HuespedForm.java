@@ -30,7 +30,6 @@ public class HuespedForm extends JPanel {
 	private JComboBox<Nacionalidad> fldNacionalidad;
 	private JLabel lbltelefono;
 	private JTextField fldTelefono;
-	private JLabel lblNumeroReserva;
 	
 	private HuespedDTO huespedDto;
 
@@ -94,6 +93,7 @@ public class HuespedForm extends JPanel {
 		lblnombre.setForeground(Color.GRAY);
 		lblnombre.setFont(getFont().deriveFont(20f));
 		lblnombre.setAlignmentX(Component.LEFT_ALIGNMENT);
+		lblnombre.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
 		fields.add(lblnombre);
 		
 		/* add nombre field */
@@ -107,6 +107,7 @@ public class HuespedForm extends JPanel {
 		lblapellido.setForeground(Color.GRAY);
 		lblapellido.setFont(getFont().deriveFont(20f));
 		lblapellido.setAlignmentX(Component.LEFT_ALIGNMENT);
+		lblapellido.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
 		fields.add(lblapellido);
 		
 		/* add apellido field */
@@ -120,6 +121,7 @@ public class HuespedForm extends JPanel {
 		lblfechaNacimiento.setForeground(Color.GRAY);
 		lblfechaNacimiento.setFont(getFont().deriveFont(20f));
 		lblfechaNacimiento.setAlignmentX(Component.LEFT_ALIGNMENT);
+		lblfechaNacimiento.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
 		fields.add(lblfechaNacimiento);
 		
 		/* add fechaNacimiento field */
@@ -137,6 +139,7 @@ public class HuespedForm extends JPanel {
 		lblnacionalidad.setForeground(Color.GRAY);
 		lblnacionalidad.setFont(getFont().deriveFont(20f));
 		lblnacionalidad.setAlignmentX(Component.LEFT_ALIGNMENT);
+		lblnacionalidad.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
 		fields.add(lblnacionalidad);
 		
 		/* add nacionalidad drop down list */
@@ -151,6 +154,7 @@ public class HuespedForm extends JPanel {
 		lbltelefono.setForeground(Color.GRAY);
 		lbltelefono.setFont(getFont().deriveFont(20f));
 		lbltelefono.setAlignmentX(Component.LEFT_ALIGNMENT);
+		lbltelefono.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
 		fields.add(lbltelefono);
 		
 		/* add Telefono field */
@@ -158,13 +162,6 @@ public class HuespedForm extends JPanel {
 		fldTelefono.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(12, 138, 199)));
 		fldTelefono.setAlignmentX(Component.LEFT_ALIGNMENT);
 		fields.add(fldTelefono);
-		
-		/* add NumeroReserva label */
-		lblNumeroReserva = new JLabel("TELEFONO");
-		lblNumeroReserva.setForeground(Color.GRAY);
-		lblNumeroReserva.setFont(getFont().deriveFont(20f));
-		lblNumeroReserva.setAlignmentX(Component.LEFT_ALIGNMENT);
-		fields.add(lblNumeroReserva);	
 	}
 	
 	/**
@@ -176,8 +173,6 @@ public class HuespedForm extends JPanel {
 					LocalDate.ofInstant(fldFechaNacimiento.getDate().toInstant(), ZoneId.systemDefault()), 
 					(Nacionalidad) fldNacionalidad.getSelectedItem(),
 					fldTelefono.getText(), null);
-		} else {
-			JOptionPane.showMessageDialog(this, "Ningún campo puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	

@@ -1,7 +1,6 @@
 package com.saulmmbp.just_another_hotel_alura.business;
 
 import java.sql.*;
-import java.util.*;
 
 import javax.swing.JOptionPane;
 
@@ -12,8 +11,8 @@ import com.saulmmbp.just_another_hotel_alura.util.MySqlConnection;
 
 public class ReservaService {
 	
-	public static Map<String, ? super Dto> registrarReserva(HuespedDTO huespedDto, ReservaDTO reservaDto) {
-		Map<String, ? super Dto> data = new HashMap<>();
+	public static HuespedDTO registrarReserva(HuespedDTO huespedDto, ReservaDTO reservaDto) {
+		HuespedDTO data = null;
 		try(Connection conn = MySqlConnection.getConnection()) {
 			conn.setAutoCommit(false);
 			try {			
@@ -29,8 +28,8 @@ public class ReservaService {
 				Long id_reserva = reservaDao.save(reserva);
 				reserva.setId(id_reserva);
 				
-				data.put("huesped", new HuespedDTO(huesped));
-				data.put("reserva", new ReservaDTO(reserva));
+				huesped.addReserva(reserva);
+				data = new HuespedDTO(huesped);
 				conn.commit();
 			} catch (Exception e) {
 				conn.rollback();

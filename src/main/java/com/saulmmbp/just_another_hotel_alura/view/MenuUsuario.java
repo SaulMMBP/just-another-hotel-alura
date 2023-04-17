@@ -89,7 +89,8 @@ public class MenuUsuario extends JPanel {
 		btnReg.addActionListener(e -> {
 			setData();
 			if(this.reservaDto != null && this.huespedDto != null) {
-				ReservaService.registrarReserva(this.huespedDto, this.reservaDto);
+				HuespedDTO data = ReservaService.registrarReserva(this.huespedDto, this.reservaDto);
+				JOptionPane.showMessageDialog(this, new Detalles(data), "Detalles", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		buttons.add(btnReg);
@@ -165,7 +166,11 @@ public class MenuUsuario extends JPanel {
 			int optHuesped = JOptionPane.showOptionDialog(this, huespedForm, "Registro de huesped", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[] {"FINALIZAR", "CANCELAR"}, null);
 			if(optHuesped == JOptionPane.OK_OPTION && huespedForm.getHuesped() != null) {
 				this.huespedDto = huespedForm.getHuesped();
+			} else if (optHuesped == JOptionPane.OK_OPTION && huespedForm.getHuesped() == null) {
+				JOptionPane.showMessageDialog(this, "Ningún campo puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
 			}
+		} else if (optReserva == JOptionPane.OK_OPTION && reservaForm.getReserva() == null) {
+			JOptionPane.showMessageDialog(this, "Ningún campo puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

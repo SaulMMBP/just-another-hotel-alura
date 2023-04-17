@@ -193,8 +193,6 @@ public class ReservaForm extends JPanel {
 					LocalDate.ofInstant(fldCheckIn.getDate().toInstant(), ZoneId.systemDefault()),
 					LocalDate.ofInstant(fldCheckOut.getDate().toInstant(), ZoneId.systemDefault()), this.totalValue,
 					fldPayment.getSelectedItem().toString(), null);
-		} else {
-			JOptionPane.showMessageDialog(this, "Ningún campo puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
