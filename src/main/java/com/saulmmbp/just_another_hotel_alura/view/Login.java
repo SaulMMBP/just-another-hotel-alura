@@ -4,32 +4,47 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.event.*;
 
 import com.saulmmbp.just_another_hotel_alura.business.LoginService;
+import com.saulmmbp.just_another_hotel_alura.util.Resources;
 
 public class Login extends JPanel {
 
 	private static final long serialVersionUID = -2974838587728175976L;
 
-	private MainFrame gui;
+	private JPanel form;
+	private JPanel header;
+	private Box decoration;
+	private Box fields;
 	private JLabel logo;
 	private JLabel lblHeader;
 	private JLabel lblUser;
 	private JLabel lblPassword;
+	private JLabel hotelImg;
 	private JTextField fldUser;
 	private JPasswordField fldPassword;
-	private JButton btnLogin;
-	private Image hotelImg;
-	
-	private final Color BLUE = new Color(12, 138, 199);
+	private boolean auth;
 
-	public Login(MainFrame gui) {
-		this.gui = gui;
+	
+	public Login() {
+		this.auth = false;
 		
 		/* Panel configs */
-		setLayout(null);
-		setBackground(Color.WHITE);
+		addAncestorListener(new AncestorListener() {
+			@Override
+			public void ancestorAdded(AncestorEvent event) {}
+
+			@Override
+			public void ancestorMoved(AncestorEvent event) {}
+			
+			@Override
+			public void ancestorRemoved(AncestorEvent event) {
+				authenticate();
+			}
+		});
 		
+		/* Initialize components */
 		init();
 	}
 	
@@ -37,33 +52,58 @@ public class Login extends JPanel {
 	 * Initialize components
 	 */
 	private void init() {
-		/* add logo */
-		logo = new JLabel(new ImageIcon(getClass().getResource("/images/lOGO-50PX.png")));
-		logo.setHorizontalAlignment(SwingConstants.CENTER);
-		logo.setBounds(65, 65, 50, 50);
-		add(logo);
+		/* add form panel */
+		form = new JPanel(new BorderLayout());
+		form.setBorder(BorderFactory.createEmptyBorder(16, 64, 16, 64));
+		add(form);
 		
-		/* add header */
+		/* add decoration panel */
+		decoration = new Box(BoxLayout.Y_AXIS);
+		decoration.setOpaque(true);
+		decoration.setBorder(BorderFactory.createEmptyBorder(16, 64, 16, 64));
+		decoration.setBackground(new Color(12, 138, 199));
+		add(decoration);
+		
+		/* add logo */
+		logo = new JLabel(Resources.getImageIcon("/images/Ha-100px.png", this));
+		logo.setBorder(BorderFactory.createEmptyBorder(0, 0, 32, 0));
+		logo.setAlignmentX(Component.CENTER_ALIGNMENT);
+		decoration.add(logo);
+		
+		/* add image */
+		hotelImg = new JLabel(Resources.getImageIcon("/images/img-hotel-login-.png", this));
+		hotelImg.setAlignmentX(Component.CENTER_ALIGNMENT);
+		decoration.add(hotelImg);
+
+		/* add header panel */
+		header = new JPanel();
+		form.add(header, BorderLayout.NORTH);
+		
+		/* add fields panel */
+		fields = new Box(BoxLayout.Y_AXIS);
+		form.add(fields, BorderLayout.CENTER);
+		
+		/* add header label */
 		lblHeader = new JLabel("INICIAR SESIÓN");
-		lblHeader.setFont(getFont().deriveFont(Font.BOLD, 20f));
-		lblHeader.setBounds(65, 149, 400, 26);
-		lblHeader.setForeground(BLUE);
-		add(lblHeader);
+		lblHeader.setFont(getFont().deriveFont(Font.BOLD, 32f));
+		lblHeader.setForeground(new Color(12, 138, 199));
+		lblHeader.setBorder(BorderFactory.createEmptyBorder(32, 0, 32, 0));
+		header.add(lblHeader);
 		
 		/* add Usuario label */
 		lblUser = new JLabel("USUARIO");
 		lblUser.setForeground(Color.GRAY);
-		lblUser.setFont(getFont().deriveFont(20f));
-		lblUser.setBounds(65, 219, 400, 26);
-		add(lblUser);
+		lblUser.setFont(getFont().deriveFont(Font.BOLD, 20f));
+		lblUser.setAlignmentX(Component.LEFT_ALIGNMENT);
+		lblUser.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
+		fields.add(lblUser);
 		
 		/* add usuario field */
 		fldUser = new JTextField();
-		fldUser.setFont(getFont().deriveFont(12f));
 		fldUser.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.decode("0x0d8ac7")));
 		fldUser.setForeground(Color.LIGHT_GRAY);
-		fldUser.setBounds(65, 256, 324, 32);
 		fldUser.setText("Ingrese su nombre de usuario");
+		fldUser.setAlignmentX(Component.LEFT_ALIGNMENT);
 		fldUser.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -83,22 +123,22 @@ public class Login extends JPanel {
 				}
 			}
 		});
-		add(fldUser);
+		fields.add(fldUser);
 		
 		/* add password label */
 		lblPassword = new JLabel("CONTRASEÑA");
 		lblPassword.setForeground(Color.GRAY);
-		lblPassword.setFont(getFont().deriveFont(20f));
-		lblPassword.setBounds(65, 316, 140, 26);
-		add(lblPassword);
+		lblPassword.setFont(getFont().deriveFont(Font.BOLD, 20f));
+		lblPassword.setAlignmentX(Component.LEFT_ALIGNMENT);
+		lblPassword.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
+		fields.add(lblPassword);
 		
 		/* add password field */
 		fldPassword = new JPasswordField();
-		fldPassword.setBounds(65, 353, 324, 32);
 		fldPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.decode("0x0d8ac7")));
-		fldPassword.setFont(getFont().deriveFont(12f));
 		fldPassword.setText("**********");
 		fldPassword.setForeground(Color.LIGHT_GRAY);
+		fldPassword.setAlignmentX(Component.LEFT_ALIGNMENT);
 		fldPassword.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -118,49 +158,27 @@ public class Login extends JPanel {
 				}
 			}
 		});
-		fldPassword.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if(e.getKeyChar() == '\n') {
-					login();
-				}
-			}
-		});
-		add(fldPassword);
-		
-		/* add button login */
-		btnLogin = new JButton("ENTRAR");
-		btnLogin.setBackground(new Color(12, 138, 199));
-		btnLogin.setBounds(65, 431, 122, 44);
-		btnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnLogin.addActionListener(event -> login());
-		add(btnLogin);
-	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		/* Draw a blue rectangle on the right */
-		g.setColor(Color.decode("0x0d8ac7"));
-		g.fillRect((gui.getWidth() / 3) * 2, 0, gui.getWidth() / 3, gui.getHeight());
-		
-		/* Draw an image on the right */
-		hotelImg = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/img-hotel-login-.png"));
-		g.drawImage(hotelImg, (gui.getWidth() / 6) * 5 - 150, 0, this);
-		
+		fields.add(fldPassword);
 	}
 	
 	/**
 	 * Athenticate the user
 	 */
-	private void login() {
-		boolean isAuth = LoginService.login(fldUser.getText(), new String(fldPassword.getPassword()));
-		if(isAuth) {
-			gui.setPanel("menuUsuario");
-		} else {
-			JOptionPane.showMessageDialog(this, "Su usuario y/o contraseña son incorrectos", 
-					"Hotel Alura Message", JOptionPane.ERROR_MESSAGE);
-		}
+	private void authenticate() {
+		this.auth = LoginService.login(fldUser.getText(), new String(fldPassword.getPassword()));
 	}
 	
+	/**
+	 * Get if the user is autheticated
+	 */
+	public boolean isAuth() {
+		return this.auth;
+	}
+	
+	/**
+	 * Set if the user is autheticated
+	 */
+	public void setAuth(boolean auth) {
+		this.auth = auth;
+	}
 }

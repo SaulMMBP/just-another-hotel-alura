@@ -8,17 +8,13 @@ public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 8934221359034362015L;
 
-	private JCustomTitleBar tb;
-	private JPanel panels;
-
+	private JPanel root;
+	
 	public MainFrame() {
 		/* Frame Configs */
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(960, 540);
+		setSize(1280, 720);
 		setResizable(false);
-		setLayout(null);
-		setFont(new Font("Robot", Font.PLAIN, 16));
-		setUndecorated(true);
 		setTitle("Hotel Alura");
 
 		init();
@@ -32,20 +28,12 @@ public class MainFrame extends JFrame {
 	 */
 	private void init() {
 		/* Add panels */
-		panels = new JPanel(new CardLayout());
-		panels.setBounds(0, 0, getWidth(), getHeight());
-		panels.add("menuPrincipal", new MenuPrincipal(this));
-		panels.add("login", new Login(this));
-		panels.add("menuUsuario", new MenuUsuario(this));
-		panels.add("busqueda", new Busqueda(this));
-		add(panels);
+		root = new JPanel(new CardLayout());
+//		root.add("menuPrincipal", new MenuPrincipal(this));
+		root.add("menuUsuario", new MenuUsuario(this));
+		root.add("busqueda", new Busqueda(this));
 		
-		tb = new JCustomTitleBar(this);
-		add(tb);
-		
-		setComponentZOrder(tb, 0);
-		setComponentZOrder(panels, 1);
-		tb.repaint();
+		add(root);
 	}
 
 	/**
@@ -54,8 +42,7 @@ public class MainFrame extends JFrame {
 	 * @param panelName
 	 */
 	public void setPanel(String panelName) {
-		((CardLayout) panels.getLayout()).show(panels, panelName);
-		tb.repaint();
+		((CardLayout) root.getLayout()).show(root, panelName);
 	}
 
 }

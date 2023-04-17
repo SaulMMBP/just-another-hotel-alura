@@ -1,6 +1,7 @@
 package com.saulmmbp.just_another_hotel_alura.dataaccess;
 
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -65,9 +66,43 @@ public class ReservaDaoImpl implements ReservaDao {
 		}
 		return reservas;
 	}
-	
-	
-	
-	
 
+	@Override
+	public Long save(Reserva reserva) {
+		int affectedRows = 0; 
+		Long generatedKey = 0L;
+		String sql;
+		if(reserva.getId() != null && reserva.getId() != 0) {
+			sql = "UPDATE reservas SET fecha_entrada=?, fecha_salida=?, valor=?, forma_pago=? WHERE id=?";
+		} else {
+			sql = "INSERT INTO reservaes(fecha_entrada, fecha_salida, valor, forma_pago) VALUES (?,?,?,?)";
+		}
+		try(PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			stmt.setDate(1, Date.valueOf(reserva.getFechaEntrada()));
+			stmt.setDate(2, Date.valueOf(reserva.getFechaSalida()));
+			stmt.setString(3, reserva.getValor().toPlainString());
+			stmt.setString(4, reserva.getFormaPago());
+			if(reserva.getId() != null && reserva.getId() != 0) {
+				stmt.setLong(5, reserva.getId());
+			} 
+			affectedRows = stmt.executeUpdate();
+			
+			try(ResultSet rs = stmt.getGeneratedKeys()) {
+				if (rs.next()) {
+					generatedKey = rs.getLong(1);
+				}
+			}
+			
+		} catch (SQLException e) {
+			System.err.println(e.getMessage() + ":" + e.getCause());
+			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		if(reserva.getId() != null && reserva.getId() != 0) {
+			return (long) affectedRows;
+		} else {
+			return generatedKey;
+		}
+	}
+	
 }

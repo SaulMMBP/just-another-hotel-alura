@@ -27,8 +27,8 @@ CREATE TABLE huespedes(
 # Creamos tabla reservas con llave foránea huesped_id
 CREATE TABLE reservas(
 	id_reserva BIGINT NOT NULL AUTO_INCREMENT,
-	fecha_entrada TIMESTAMP NOT NULL,
-	fecha_salida TIMESTAMP NOT NULL,
+	fecha_entrada DATE NOT NULL,
+	fecha_salida DATE NOT NULL,
 	valor VARCHAR(50) NOT NULL,
 	forma_pago VARCHAR(100) NOT NULL,
 	huesped_id BIGINT NOT NULL,
@@ -56,14 +56,14 @@ VALUES
 # Insertamos reservas de ejemplo
 INSERT INTO `reservas` (`fecha_entrada`,`fecha_salida`,`valor`,`forma_pago`,`huesped_id`)
 VALUES
-  ("2022-07-23 04:00:07","2022-08-27 20:39:25","63226.71","Tarjeta de Crédito",5),
-  ("2022-05-21 22:39:24","2023-09-13 10:55:44","50961.36","Tarjeta de Débito",6),
-  ("2024-01-13 09:54:52","2023-09-08 03:57:09","37299.82","Tarjeta de Crédito",7),
-  ("2023-09-10 10:48:55","2024-02-17 11:07:34","43340.60","Tarjeta de Débito",2),
-  ("2023-11-02 09:41:53","2024-02-26 19:21:17","62073.13","Tarjeta de Crédito",6),
-  ("2023-04-21 11:02:29","2023-05-03 00:50:28","5195.05","Tarjeta de Crédito",10),
-  ("2022-06-04 06:47:25","2022-10-13 18:05:18","83887.09","Tarjeta de Débito",5),
-  ("2022-07-16 03:30:40","2022-04-28 15:14:14","67061.64","Dinero en efectivo",3),
-  ("2023-06-28 00:11:44","2023-05-12 01:11:00","17675.81","Dinero en efectivo",8),
-  ("2023-11-19 16:28:38","2023-10-09 21:23:44","34441.99","Tarjeta de Crédito",4);
+  ("2022-07-23","2022-08-27","63226.71","Tarjeta de Crédito",5),
+  ("2022-05-21","2023-09-13","50961.36","Tarjeta de Débito",6),
+  ("2024-01-13","2023-09-08","37299.82","Tarjeta de Crédito",7),
+  ("2023-09-10","2024-02-17","43340.60","Tarjeta de Débito",2),
+  ("2023-11-02","2024-02-26","62073.13","Tarjeta de Crédito",6),
+  ("2023-04-21","2023-05-03","5195.05","Tarjeta de Crédito",10),
+  ("2022-06-04","2022-10-13","83887.09","Tarjeta de Débito",5),
+  ("2022-07-16","2022-04-28","67061.64","Dinero en efectivo",3),
+  ("2023-06-28","2023-05-12","17675.81","Dinero en efectivo",8),
+  ("2023-11-19","2023-10-09","34441.99","Tarjeta de Crédito",4);
   

@@ -18,6 +18,9 @@ public class App {
 			JOptionPane.showMessageDialog(null,
 					"No fue posible cargar el Tema, se utilizará el tema predeterminado del sistema");
 		}
-		EventQueue.invokeLater(MainFrame::new); // Launch
+		
+		/* Create a runner and execute with the thread dispatcher of swing */
+		Runnable runner = MainFrame::new;
+		EventQueue.invokeLater(runner); // Launch
 	}
 }

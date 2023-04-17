@@ -2,7 +2,7 @@ package com.saulmmbp.just_another_hotel_alura.model;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import com.saulmmbp.just_another_hotel_alura.business.dto.ReservaDTO;
@@ -10,8 +10,8 @@ import com.saulmmbp.just_another_hotel_alura.business.dto.ReservaDTO;
 public class Reserva {
 
 	private Long id;
-	private LocalDateTime fechaEntrada;
-	private LocalDateTime fechaSalida;
+	private LocalDate fechaEntrada;
+	private LocalDate fechaSalida;
 	private BigDecimal valor;
 	private String formaPago;
 	private Long huesped_id;
@@ -22,8 +22,8 @@ public class Reserva {
 
 	public Reserva(ResultSet rs) throws SQLException {
 		this.id = rs.getLong("id_reserva");
-		this.fechaEntrada = rs.getTimestamp("fecha_entrada").toLocalDateTime();
-		this.fechaSalida = rs.getTimestamp("fecha_salida").toLocalDateTime();
+		this.fechaEntrada = rs.getDate("fecha_entrada").toLocalDate();
+		this.fechaSalida = rs.getDate("fecha_salida").toLocalDate();
 		this.valor = new BigDecimal(rs.getString("valor"));
 		this.formaPago = rs.getString("forma_pago");
 		this.huesped_id = rs.getLong("huesped_id");
@@ -45,19 +45,19 @@ public class Reserva {
 		this.id = id;
 	}
 
-	public LocalDateTime getFechaEntrada() {
+	public LocalDate getFechaEntrada() {
 		return fechaEntrada;
 	}
 
-	public void setFechaEntrada(LocalDateTime fechaEntrada) {
+	public void setFechaEntrada(LocalDate fechaEntrada) {
 		this.fechaEntrada = fechaEntrada;
 	}
 
-	public LocalDateTime getFechaSalida() {
+	public LocalDate getFechaSalida() {
 		return fechaSalida;
 	}
 
-	public void setFechaSalida(LocalDateTime fechaSalida) {
+	public void setFechaSalida(LocalDate fechaSalida) {
 		this.fechaSalida = fechaSalida;
 	}
 

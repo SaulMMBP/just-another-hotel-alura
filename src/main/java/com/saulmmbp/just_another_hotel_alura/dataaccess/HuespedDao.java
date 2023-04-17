@@ -12,4 +12,6 @@ public interface HuespedDao {
 	
 	List<Huesped> findHuespedByNombreApellido(String username);
 	
+	Long save(Huesped huesped);
+	
 }

@@ -12,5 +12,7 @@ public interface ReservaDao {
 	Reserva findById(Long id);
 	
 	List<Reserva> findByDate(LocalDateTime fecha);
+	
+	Long save(Reserva reserva);
 
 }
