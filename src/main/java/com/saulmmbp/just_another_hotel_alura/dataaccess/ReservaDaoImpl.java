@@ -5,8 +5,6 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import javax.swing.JOptionPane;
-
 import com.saulmmbp.just_another_hotel_alura.model.Reserva;
 
 public class ReservaDaoImpl implements ReservaDao {
@@ -18,22 +16,19 @@ public class ReservaDaoImpl implements ReservaDao {
 	}
 
 	@Override
-	public List<Reserva> findAll() {
+	public List<Reserva> findAll() throws SQLException {
 		List<Reserva> reservas = new ArrayList<>();
 		try(Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery("SELECT * FROM reservas")) {
 			while(rs.next()) {
 				reservas.add(new Reserva(rs));
 			}
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return reservas;
 	}
 
 	@Override
-	public Reserva findById(Long id) {
+	public Reserva findById(Long id) throws SQLException {
 		Reserva reserva = null;
 		try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM reservas WHERE id_reserva=?")) {
 			stmt.setLong(1, id);
@@ -42,15 +37,12 @@ public class ReservaDaoImpl implements ReservaDao {
 					reserva = new Reserva(rs);
 				}
 			}
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return reserva;
 	}
 
 	@Override
-	public List<Reserva> findByDate(LocalDateTime fecha) {
+	public List<Reserva> findByDate(LocalDateTime fecha) throws SQLException {
 		List<Reserva> reservas = new ArrayList<>();
 		try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM reservas WHERE fecha_entrada BETWEEN ? AND ?")) {
 			stmt.setTimestamp(1, Timestamp.valueOf(fecha));
@@ -60,22 +52,19 @@ public class ReservaDaoImpl implements ReservaDao {
 					reservas.add(new Reserva(rs));
 				}
 			}
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return reservas;
 	}
 
 	@Override
-	public Long save(Reserva reserva) {
+	public Long save(Reserva reserva) throws SQLException {
 		int affectedRows = 0; 
 		Long generatedKey = 0L;
 		String sql;
 		if(reserva.getId() != null && reserva.getId() != 0) {
 			sql = "UPDATE reservas SET fecha_entrada=?, fecha_salida=?, valor=?, forma_pago=?, huesped_id=? WHERE id=?";
 		} else {
-			sql = "INSERT INTO reservaas(fecha_entrada, fecha_salida, valor, forma_pago, huesped_id) VALUES (?,?,?,?,?)";
+			sql = "INSERT INTO reservas(fecha_entrada, fecha_salida, valor, forma_pago, huesped_id) VALUES (?,?,?,?,?)";
 		}
 		try(PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			stmt.setDate(1, Date.valueOf(reserva.getFechaEntrada()));
@@ -94,10 +83,6 @@ public class ReservaDaoImpl implements ReservaDao {
 				}
 			}
 			
-		} catch (SQLException e) {
-			System.err.println(e.getMessage() + ":" + e.getCause());
-			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error",
-					JOptionPane.ERROR_MESSAGE);
 		}
 		if(reserva.getId() != null && reserva.getId() != 0) {
 			return (long) affectedRows;

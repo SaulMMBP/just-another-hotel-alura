@@ -32,16 +32,15 @@ public class ReservaService {
 				data.put("huesped", new HuespedDTO(huesped));
 				data.put("reserva", new ReservaDTO(reserva));
 				conn.commit();
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				conn.rollback();
 				e.printStackTrace();
 				System.err.println(e.getMessage());
-				JOptionPane.showMessageDialog(null, "El registro no se pudo completar",
+				JOptionPane.showMessageDialog(null, "Ups... El registro no se pudo completar",
 						"Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión con la base de datos",
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
 					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return data;

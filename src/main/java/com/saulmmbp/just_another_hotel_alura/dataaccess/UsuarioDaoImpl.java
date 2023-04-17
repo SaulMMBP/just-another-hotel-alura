@@ -11,7 +11,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	}
 
 	@Override
-	public String getPassword(String username) {
+	public String getPassword(String username) throws SQLException {
 		String password = null;
 		try(PreparedStatement stmt = conn.prepareStatement("SELECT password FROM usuarios WHERE username=?")) {
 			stmt.setString(1, username);
@@ -20,8 +20,6 @@ public class UsuarioDaoImpl implements UsuarioDao {
 					password = rs.getString("password");
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		return password;
 	}

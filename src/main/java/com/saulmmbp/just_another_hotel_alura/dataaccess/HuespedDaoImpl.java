@@ -4,8 +4,6 @@ import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
-import javax.swing.JOptionPane;
-
 import com.saulmmbp.just_another_hotel_alura.model.Huesped;
 
 public class HuespedDaoImpl implements HuespedDao {
@@ -20,16 +18,12 @@ public class HuespedDaoImpl implements HuespedDao {
 	 * Return all the guests from the data base
 	 */
 	@Override
-	public List<Huesped> findAll() {
+	public List<Huesped> findAll() throws SQLException{
 		List<Huesped> huespedes = new ArrayList<>();
 		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery("SELECT * FROM huespedes")) {
 			while (rs.next()) {
 				huespedes.add(new Huesped(rs));
 			}
-		} catch (SQLException e) {
-			System.err.println(e.getMessage() + ":" + e.getCause());
-			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error",
-					JOptionPane.ERROR_MESSAGE);
 		}
 		return huespedes;
 	}
@@ -38,7 +32,7 @@ public class HuespedDaoImpl implements HuespedDao {
 	 * Return a guest in the data base where name or lastname is the keyword 
 	 */
 	@Override
-	public List<Huesped> findHuespedByNombreApellido(String keyword) {
+	public List<Huesped> findHuespedByNombreApellido(String keyword) throws SQLException{
 		List<Huesped> huespedes = new ArrayList<>();
 		try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM huespedes WHERE nombre LIKE ? OR apellido LIKE ?")) {
 			stmt.setString(1, "%" + keyword + "%");
@@ -48,10 +42,6 @@ public class HuespedDaoImpl implements HuespedDao {
 					huespedes.add(new Huesped(rs));
 				}
 			}
-		} catch (SQLException e) {
-			System.err.println(e.getMessage() + ":" + e.getCause());
-			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error",
-					JOptionPane.ERROR_MESSAGE);
 		}
 		return huespedes;
 	}
@@ -60,7 +50,7 @@ public class HuespedDaoImpl implements HuespedDao {
 	 * Return a guest with the id indicated
 	 */
 	@Override
-	public Huesped findById(Long id) {
+	public Huesped findById(Long id) throws SQLException{
 		Huesped huesped = null;
 		try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM huespedes WHERE id_huesped=?")) {
 			stmt.setLong(1, id);
@@ -69,16 +59,12 @@ public class HuespedDaoImpl implements HuespedDao {
 					huesped = new Huesped(rs);
 				}
 			}
-		} catch (SQLException e) {
-			System.err.println(e.getMessage() + ":" + e.getCause());
-			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error",
-					JOptionPane.ERROR_MESSAGE);
 		}
 		return huesped;
 	}
 
 	@Override
-	public Long save(Huesped huesped) {
+	public Long save(Huesped huesped) throws SQLException{
 		int affectedRows = 0; 
 		Long generatedKey = 0L;
 		String sql;
@@ -103,11 +89,6 @@ public class HuespedDaoImpl implements HuespedDao {
 					generatedKey = rs.getLong(1);
 				}
 			}
-			
-		} catch (SQLException e) {
-			System.err.println(e.getMessage() + ":" + e.getCause());
-			JOptionPane.showMessageDialog(null, "No se pudo realizar la consulta", "Hotel Alura Error",
-					JOptionPane.ERROR_MESSAGE);
 		}
 		
 		if(huesped.getId() != null && huesped.getId() != 0) {

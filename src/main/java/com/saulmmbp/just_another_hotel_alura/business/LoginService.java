@@ -2,6 +2,8 @@ package com.saulmmbp.just_another_hotel_alura.business;
 
 import java.sql.*;
 
+import javax.swing.JOptionPane;
+
 import com.saulmmbp.just_another_hotel_alura.dataaccess.*;
 import com.saulmmbp.just_another_hotel_alura.util.MySqlConnection;
 
@@ -17,7 +19,8 @@ public class LoginService {
 				}
 			}
 		} catch (SQLException e) {
-			System.err.println("Error de conexión con la base de datos");
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return false;
 	}

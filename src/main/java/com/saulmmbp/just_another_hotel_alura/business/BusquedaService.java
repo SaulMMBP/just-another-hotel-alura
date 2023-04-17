@@ -20,8 +20,8 @@ public class BusquedaService {
 			HuespedDao huespedDao = new HuespedDaoImpl(conn);
 			huespedes = huespedDao.findAll().stream().map(huesped -> new HuespedDTO(huesped)).toList();
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión con la base de datos",
-					"Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return huespedes;
 	}
@@ -32,8 +32,8 @@ public class BusquedaService {
 			ReservaDao reservaDao = new ReservaDaoImpl(conn);
 			reservas = reservaDao.findAll().stream().map(reserva -> new ReservaDTO(reserva)).toList();
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión con la base de datos",
-					"Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return reservas;
 	}
@@ -45,8 +45,8 @@ public class BusquedaService {
 			huespedes = huespedDao.findHuespedByNombreApellido(keyword).stream().map(huesped -> new HuespedDTO(huesped))
 					.toList();
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión con la base de datos",
-					"Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return huespedes;
 	}
@@ -60,8 +60,8 @@ public class BusquedaService {
 				huespedes.add(new HuespedDTO(h));
 			}
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión con la base de datos",
-					"Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return huespedes;
 	}
@@ -76,7 +76,7 @@ public class BusquedaService {
 			}
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión con la base de datos",
-					"Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return reservas;
 	}
@@ -87,8 +87,8 @@ public class BusquedaService {
 			ReservaDao reservaDao = new ReservaDaoImpl(conn);
 			reservas = reservaDao.findByDate(fechaEntrada).stream().map(reserva -> new ReservaDTO(reserva)).toList();
 		} catch (SQLException | NumberFormatException | DateTimeParseException e) {
-			JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión con la base de datos",
-					"Hotel Alura Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return reservas;
 	}
