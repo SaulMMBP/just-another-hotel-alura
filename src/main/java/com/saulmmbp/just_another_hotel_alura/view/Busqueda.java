@@ -42,8 +42,7 @@ public class Busqueda extends JPanel {
 	private final String[] tbhdHuespedes = new String[] { "Número", "Nombre", "Apellido", "Fecha de nacimiento",
 			"Nacionalidad", "telefono" };
 
-
-
+	private JButton btnBack;
 
 	public Busqueda(MainFrame gui) {
 		this.gui = gui;
@@ -125,7 +124,7 @@ public class Busqueda extends JPanel {
 		search.add(btnSearch);
 		
 		content = new JPanel(new BorderLayout());
-		content.setBorder(BorderFactory.createEmptyBorder(32, 64, 32, 64));
+		content.setBorder(BorderFactory.createEmptyBorder(32, 64, 16, 64));
 		add(content, BorderLayout.CENTER);
 
 		/* add content pane */
@@ -150,7 +149,7 @@ public class Busqueda extends JPanel {
 
 		/* add buttons panel */
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT, 16, 0));
-		buttons.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
+		buttons.setBorder(BorderFactory.createEmptyBorder(16, 64, 32, 64));
 		add(buttons, BorderLayout.SOUTH);
 		
 		/* add editar button */
@@ -170,6 +169,13 @@ public class Busqueda extends JPanel {
 		btnDetails.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnDetails.addActionListener(e -> {/* TODO implementar acción */});
 		buttons.add(btnDetails);
+		
+		/* add back button */
+		btnBack = new JButton("ATRÁS");
+		btnBack.addActionListener(e -> gui.setPanel("menuUsuario"));
+		btnBack.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		buttons.add(btnBack);
 	}
 
 	/**

@@ -97,7 +97,7 @@ public class ReservaForm extends JPanel {
 		/* add check in label */
 		lblCheckIn = new JLabel("FECHA DE ENTRADA");
 		lblCheckIn.setForeground(Color.GRAY);
-		lblCheckIn.setFont(getFont().deriveFont(Font.BOLD, 20f));
+		lblCheckIn.setFont(getFont().deriveFont(20f));
 		lblCheckIn.setAlignmentX(Component.LEFT_ALIGNMENT);
 		lblCheckIn.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
 		fields.add(lblCheckIn);
@@ -119,7 +119,7 @@ public class ReservaForm extends JPanel {
 		/* add check out label */
 		lblCheckOut = new JLabel("FECHA DE SALIDA");
 		lblCheckOut.setForeground(Color.GRAY);
-		lblCheckOut.setFont(getFont().deriveFont(Font.BOLD, 20f));
+		lblCheckOut.setFont(getFont().deriveFont(20f));
 		lblCheckOut.setAlignmentX(Component.LEFT_ALIGNMENT);
 		lblCheckOut.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
 		fields.add(lblCheckOut);
@@ -141,7 +141,7 @@ public class ReservaForm extends JPanel {
 		/* add value label */
 		lblValue = new JLabel("VALUE");
 		lblValue.setForeground(Color.GRAY);
-		lblValue.setFont(getFont().deriveFont(Font.BOLD, 20f));
+		lblValue.setFont(getFont().deriveFont(20f));
 		lblValue.setAlignmentX(Component.LEFT_ALIGNMENT);
 		lblValue.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
 		fields.add(lblValue);
@@ -157,7 +157,7 @@ public class ReservaForm extends JPanel {
 		/* add payment method label */
 		lblPayment = new JLabel("FORMA DE PAGO");
 		lblPayment.setForeground(Color.GRAY);
-		lblPayment.setFont(getFont().deriveFont(Font.BOLD, 20f));
+		lblPayment.setFont(getFont().deriveFont(20f));
 		lblPayment.setAlignmentX(Component.LEFT_ALIGNMENT);
 		lblPayment.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
 		fields.add(lblPayment);
@@ -188,11 +188,13 @@ public class ReservaForm extends JPanel {
 	 * Set the reservation info in ReservaDTO
 	 */
 	public void setReserva() {
-		if (fldCheckIn.getDate() != null && fldCheckOut.getDate() != null) {
+		if (nullValidation()) {
 			this.reserva = new ReservaDTO(null,
 					LocalDate.ofInstant(fldCheckIn.getDate().toInstant(), ZoneId.systemDefault()),
 					LocalDate.ofInstant(fldCheckOut.getDate().toInstant(), ZoneId.systemDefault()), this.totalValue,
 					fldPayment.getSelectedItem().toString(), null);
+		} else {
+			JOptionPane.showMessageDialog(this, "Ningún campo puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -202,5 +204,9 @@ public class ReservaForm extends JPanel {
 	 */
 	public ReservaDTO getReserva() {
 		return this.reserva;
+	}
+	
+	private boolean nullValidation() {
+		return fldCheckIn.getDate() != null && fldCheckOut.getDate() != null;
 	}
 }

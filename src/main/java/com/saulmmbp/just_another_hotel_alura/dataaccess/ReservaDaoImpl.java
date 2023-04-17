@@ -73,17 +73,18 @@ public class ReservaDaoImpl implements ReservaDao {
 		Long generatedKey = 0L;
 		String sql;
 		if(reserva.getId() != null && reserva.getId() != 0) {
-			sql = "UPDATE reservas SET fecha_entrada=?, fecha_salida=?, valor=?, forma_pago=? WHERE id=?";
+			sql = "UPDATE reservas SET fecha_entrada=?, fecha_salida=?, valor=?, forma_pago=?, huesped_id=? WHERE id=?";
 		} else {
-			sql = "INSERT INTO reservaes(fecha_entrada, fecha_salida, valor, forma_pago) VALUES (?,?,?,?)";
+			sql = "INSERT INTO reservaas(fecha_entrada, fecha_salida, valor, forma_pago, huesped_id) VALUES (?,?,?,?,?)";
 		}
 		try(PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			stmt.setDate(1, Date.valueOf(reserva.getFechaEntrada()));
 			stmt.setDate(2, Date.valueOf(reserva.getFechaSalida()));
 			stmt.setString(3, reserva.getValor().toPlainString());
 			stmt.setString(4, reserva.getFormaPago());
+			stmt.setLong(5, reserva.getHuesped_id());
 			if(reserva.getId() != null && reserva.getId() != 0) {
-				stmt.setLong(5, reserva.getId());
+				stmt.setLong(6, reserva.getId());
 			} 
 			affectedRows = stmt.executeUpdate();
 			

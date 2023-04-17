@@ -1,7 +1,6 @@
 package com.saulmmbp.just_another_hotel_alura.view;
 
 import java.awt.*;
-import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -93,71 +92,31 @@ public class Login extends JPanel {
 		/* add Usuario label */
 		lblUser = new JLabel("USUARIO");
 		lblUser.setForeground(Color.GRAY);
-		lblUser.setFont(getFont().deriveFont(Font.BOLD, 20f));
+		lblUser.setFont(getFont().deriveFont(20f));
 		lblUser.setAlignmentX(Component.LEFT_ALIGNMENT);
-		lblUser.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
+		lblUser.setBorder(BorderFactory.createEmptyBorder(32, 0, 8, 0));
 		fields.add(lblUser);
 		
 		/* add usuario field */
 		fldUser = new JTextField();
 		fldUser.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.decode("0x0d8ac7")));
-		fldUser.setForeground(Color.LIGHT_GRAY);
-		fldUser.setText("Ingrese su nombre de usuario");
 		fldUser.setAlignmentX(Component.LEFT_ALIGNMENT);
-		fldUser.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				JTextField fld = (JTextField) e.getComponent();
-				if(fld.getText().equals("Ingrese su nombre de usuario")) {
-					fld.setText("");
-					fld.setForeground(Color.BLACK);
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				JTextField fld = (JTextField) e.getComponent();
-				if(fld.getText().isBlank()) {
-					fld.setText("Ingrese su nombre de usuario");
-					fld.setForeground(Color.LIGHT_GRAY);
-				}
-			}
-		});
+		fldUser.putClientProperty("JTextField.placeholderText", "Ingrese su nombre de usuario");
 		fields.add(fldUser);
 		
 		/* add password label */
 		lblPassword = new JLabel("CONTRASEÑA");
 		lblPassword.setForeground(Color.GRAY);
-		lblPassword.setFont(getFont().deriveFont(Font.BOLD, 20f));
+		lblPassword.setFont(getFont().deriveFont(20f));
 		lblPassword.setAlignmentX(Component.LEFT_ALIGNMENT);
-		lblPassword.setBorder(BorderFactory.createEmptyBorder(16, 0, 8, 0));
+		lblPassword.setBorder(BorderFactory.createEmptyBorder(32, 0, 8, 0));
 		fields.add(lblPassword);
 		
 		/* add password field */
 		fldPassword = new JPasswordField();
 		fldPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.decode("0x0d8ac7")));
-		fldPassword.setText("**********");
-		fldPassword.setForeground(Color.LIGHT_GRAY);
 		fldPassword.setAlignmentX(Component.LEFT_ALIGNMENT);
-		fldPassword.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				JPasswordField fld = (JPasswordField) e.getComponent();
-				if(String.valueOf(fld.getPassword()).equals("**********")) {
-					fld.setText("");
-					fld.setForeground(Color.BLACK);
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				JPasswordField fld = (JPasswordField) e.getComponent();
-				if(String.valueOf(fld.getPassword()).isBlank()) {
-					fld.setText("**********");
-					fld.setForeground(Color.LIGHT_GRAY);
-				}
-			}
-		});
+		fldPassword.putClientProperty("JTextField.placeholderText", "*************************");
 		fields.add(fldPassword);
 	}
 	

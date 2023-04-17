@@ -6,7 +6,8 @@ import java.util.*;
 
 import javax.swing.*;
 
-import com.saulmmbp.just_another_hotel_alura.business.dto.ReservaDTO;
+import com.saulmmbp.just_another_hotel_alura.business.ReservaService;
+import com.saulmmbp.just_another_hotel_alura.business.dto.*;
 import com.saulmmbp.just_another_hotel_alura.util.Resources;
 
 public class MenuUsuario extends JPanel {
@@ -14,14 +15,25 @@ public class MenuUsuario extends JPanel {
 	private static final long serialVersionUID = -1820063700734725906L;
 
 	private MainFrame gui;
-	private ReservaForm reservaForm;
-	private JSeparator separator;
+	private JPanel menu;
+	private JPanel content;
+	private JPanel menuHeader;
+	private JPanel header;
+	private Box buttons;
+	private Box boxBtnBack;
+	private JLabel lblDate;
+	private JLabel lblheader;
+	private JLabel logo;
 	private JButton btnReg;
 	private JButton btnSearch;
+	private JButton btnBack;
+	private ReservaForm reservaForm;
+	private HuespedForm huespedForm;
+	private JSeparator separator;
 	private JTextPane body;
-	private JLabel logo;
 
 	private ReservaDTO reservaDto;
+	private HuespedDTO huespedDto;
 
 	public MenuUsuario(MainFrame gui) {
 		this.gui = gui;
@@ -37,14 +49,14 @@ public class MenuUsuario extends JPanel {
 	 * Initialize components
 	 */
 	private void init() {
-		/* Menu panel */
-		JPanel menu = new JPanel(new BorderLayout());
+		/* add menu panel */
+		menu = new JPanel(new BorderLayout());
 		menu.setOpaque(true);
 		menu.setBackground(new Color(12, 138, 199));
 		add(menu, BorderLayout.WEST);
 		
-		/* add menu header panel */
-		JPanel menuHeader = new JPanel(new BorderLayout());
+		/* add menu header */
+		menuHeader = new JPanel(new BorderLayout());
 		menuHeader.setOpaque(false);
 		menuHeader.setBorder(BorderFactory.createEmptyBorder(64, 16, 16, 16));
 		menu.add(menuHeader, BorderLayout.NORTH);
@@ -60,8 +72,8 @@ public class MenuUsuario extends JPanel {
 		separator.setAlignmentX(Component.CENTER_ALIGNMENT);
 		menuHeader.add(separator, BorderLayout.AFTER_LAST_LINE);
 		
-		/* add buttons panel */
-		Box buttons = new Box(BoxLayout.Y_AXIS);
+		/* add menu buttons panel */
+		buttons = new Box(BoxLayout.Y_AXIS);
 		buttons.setOpaque(false);
 		buttons.setBorder(BorderFactory.createEmptyBorder(16, 0, 32, 0));
 		menu.add(buttons, BorderLayout.CENTER);
@@ -71,10 +83,15 @@ public class MenuUsuario extends JPanel {
 		btnReg.setBorderPainted(false);
 		btnReg.setBackground(new Color(12, 138, 199));
 		btnReg.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnReg.addActionListener(e -> setReserva());
 		btnReg.setForeground(Color.WHITE);
 		btnReg.setHorizontalAlignment(SwingConstants.LEFT);
 		btnReg.setMaximumSize(new Dimension(256, 64));
+		btnReg.addActionListener(e -> {
+			setData();
+			if(this.reservaDto != null && this.huespedDto != null) {
+				ReservaService.registrarReserva(this.huespedDto, this.reservaDto);
+			}
+		});
 		buttons.add(btnReg);
 
 		/* add button for search */
@@ -89,22 +106,22 @@ public class MenuUsuario extends JPanel {
 		buttons.add(btnSearch);
 
 		/* add content panel */
-		JPanel content = new JPanel(new BorderLayout());
-		content.setBorder(BorderFactory.createEmptyBorder(64, 64, 64, 64));
+		content = new JPanel(new BorderLayout());
+		content.setBorder(BorderFactory.createEmptyBorder(64, 64, 32, 64));
 		add(content, BorderLayout.CENTER);
 		
-		/* add header panel */
-		JPanel header = new JPanel(new BorderLayout());
+		/* add header content panel */
+		header = new JPanel(new BorderLayout());
 		content.add(header, BorderLayout.NORTH);
 		
-		/* add date */
-		JLabel lblDate = new JLabel(new SimpleDateFormat("MMM dd yyyy").format(new Date()));
+		/* add date label */
+		lblDate = new JLabel(new SimpleDateFormat("MMM dd yyyy").format(new Date()));
 		lblDate.setFont(getFont().deriveFont(12f));
 		lblDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		header.add(lblDate);
 		
-		/* add header */
-		JLabel lblheader = new JLabel("Sistema de reservas Hotel Alura");
+		/* add header label */
+		lblheader = new JLabel("Sistema de reservas Hotel Alura");
 		lblheader.setFont(getFont().deriveFont(Font.BOLD, 32f));
 		lblheader.setBorder(BorderFactory.createEmptyBorder(0, 0, 64, 0));
 		lblheader.setHorizontalAlignment(SwingConstants.CENTER);
@@ -124,11 +141,12 @@ public class MenuUsuario extends JPanel {
 				+ "</ul>" + "</body>" + "</html>");
 		content.add(body, BorderLayout.CENTER);
 
-		/* add back button */
-		Box boxBtnBack = new Box(BoxLayout.PAGE_AXIS);
+		/* add box for back button */
+		boxBtnBack = new Box(BoxLayout.PAGE_AXIS);
 		content.add(boxBtnBack, BorderLayout.SOUTH);
 		
-		JButton btnBack = new JButton("SALIR");
+		/* add back button */
+		btnBack = new JButton("SALIR");
 		btnBack.addActionListener(e -> gui.setPanel("menuPrincipal"));
 		btnBack.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -138,12 +156,16 @@ public class MenuUsuario extends JPanel {
 	/**
 	 * Open a form view for set a reservation
 	 */
-	private void setReserva() {
+	private void setData() {
 		reservaForm = new ReservaForm();
-		int resultado = JOptionPane.showOptionDialog(this, reservaForm, "Formulario de reservación", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[] {"SIGUIENTE", "CANCELAR"}, null);
-		if (resultado == JOptionPane.OK_OPTION) {
+		huespedForm = new HuespedForm();
+		int optReserva = JOptionPane.showOptionDialog(this, reservaForm, "Formulario de reservación", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[] {"SIGUIENTE", "CANCELAR"}, null);
+		if (optReserva == JOptionPane.OK_OPTION && reservaForm.getReserva() != null) {
 			this.reservaDto = reservaForm.getReserva();
+			int optHuesped = JOptionPane.showOptionDialog(this, huespedForm, "Registro de huesped", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[] {"FINALIZAR", "CANCELAR"}, null);
+			if(optHuesped == JOptionPane.OK_OPTION && huespedForm.getHuesped() != null) {
+				this.huespedDto = huespedForm.getHuesped();
+			}
 		}
 	}
-
 }
