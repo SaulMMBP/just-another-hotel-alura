@@ -13,7 +13,7 @@ import com.saulmmbp.just_another_hotel_alura.business.dto.ReservaDTO;
 import com.saulmmbp.just_another_hotel_alura.util.Resources;
 import com.toedter.calendar.JDateChooser;
 
-public class ReservaFormView extends JPanel {
+public class ReservaForm extends JPanel {
 
 	private static final long serialVersionUID = 927916308390769110L;
 
@@ -38,7 +38,7 @@ public class ReservaFormView extends JPanel {
 	private final String[] pmntMethods = new String[] { "Tarjeta de Crédito", "Tarjeta de Débito",
 			"Dinero en efectivo" }; // TODO cambiar por enum
 
-	public ReservaFormView() {
+	public ReservaForm() {
 		/* configs */
 		addAncestorListener(new AncestorListener() {
 			@Override

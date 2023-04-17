@@ -14,7 +14,7 @@ public class MenuUsuario extends JPanel {
 	private static final long serialVersionUID = -1820063700734725906L;
 
 	private MainFrame gui;
-	private ReservaFormView reservaForm;
+	private ReservaForm reservaForm;
 	private JSeparator separator;
 	private JButton btnReg;
 	private JButton btnSearch;
@@ -139,7 +139,7 @@ public class MenuUsuario extends JPanel {
 	 * Open a form view for set a reservation
 	 */
 	private void setReserva() {
-		reservaForm = new ReservaFormView();
+		reservaForm = new ReservaForm();
 		int resultado = JOptionPane.showOptionDialog(this, reservaForm, "Formulario de reservación", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[] {"SIGUIENTE", "CANCELAR"}, null);
 		if (resultado == JOptionPane.OK_OPTION) {
 			this.reservaDto = reservaForm.getReserva();
