@@ -90,7 +90,7 @@ public class MenuUsuario extends JPanel {
 			setData();
 			if(this.reservaDto != null && this.huespedDto != null) {
 				HuespedDTO data = ReservaService.registrarReserva(this.huespedDto, this.reservaDto);
-				JOptionPane.showMessageDialog(this, new Detalles(data), "Detalles", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this, new Detalles(data, false), "Detalles", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		buttons.add(btnReg);

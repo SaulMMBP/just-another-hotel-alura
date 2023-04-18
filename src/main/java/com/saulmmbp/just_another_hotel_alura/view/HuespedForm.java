@@ -130,7 +130,6 @@ public class HuespedForm extends JPanel {
 		fldFechaNacimiento.getCalendarButton().setBackground(new Color(12, 138, 199));
 		fldFechaNacimiento.getCalendarButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
 		fldFechaNacimiento.getCalendarButton().setIcon(Resources.getImageIcon("/images/icon-reservas.png", this));
-		fldFechaNacimiento.setDateFormatString("E MMM dd yyyy");
 		fldFechaNacimiento.setAlignmentX(Component.LEFT_ALIGNMENT);
 		fields.add(fldFechaNacimiento);
 		

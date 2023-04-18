@@ -93,8 +93,27 @@ public class BusquedaService {
 		return reservas;
 	}
 
-	public List<HuespedDTO> getHuesped(Long id) {
-		List<HuespedDTO> huespedes = new ArrayList<>();
-		return huespedes;
+	public static HuespedDTO getHuesped(Long id) {
+		HuespedDTO huespedDto = null;
+		try(Connection conn = MySqlConnection.getConnection()) {
+			HuespedDao huespedDao = new HuespedDaoImpl(conn);
+			huespedDto = new HuespedDTO(huespedDao.findById(id));
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return huespedDto;
+	}
+	
+	public static Long editHuesped(HuespedDTO huespedDto) {
+		Long affectedRows = 0L;
+		try(Connection conn = MySqlConnection.getConnection()) {
+			HuespedDao huespedDao = new HuespedDaoImpl(conn);
+			affectedRows = huespedDao.save(new Huesped(huespedDto));
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return affectedRows;
 	}
 }

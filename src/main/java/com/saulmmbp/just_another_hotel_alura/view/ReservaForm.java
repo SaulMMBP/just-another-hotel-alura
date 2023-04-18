@@ -204,6 +204,10 @@ public class ReservaForm extends JPanel {
 		return this.reserva;
 	}
 	
+	/**
+	 * Validate the fields to be not null
+	 * @return
+	 */
 	private boolean nullValidation() {
 		return fldCheckIn.getDate() != null && fldCheckOut.getDate() != null;
 	}

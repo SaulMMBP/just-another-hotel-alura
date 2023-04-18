@@ -4,7 +4,7 @@ import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
-import com.saulmmbp.just_another_hotel_alura.model.Huesped;
+import com.saulmmbp.just_another_hotel_alura.model.*;
 
 public class HuespedDaoImpl implements HuespedDao {
 
@@ -52,11 +52,15 @@ public class HuespedDaoImpl implements HuespedDao {
 	@Override
 	public Huesped findById(Long id) throws SQLException{
 		Huesped huesped = null;
-		try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM huespedes WHERE id_huesped=?")) {
+		try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM huespedes AS h "
+				+ "INNER JOIN reservas AS r ON h.id_huesped=r.huesped_id WHERE id_huesped=?")) {
 			stmt.setLong(1, id);
 			try(ResultSet rs = stmt.executeQuery()) {
-				if(rs.next()) {
-					huesped = new Huesped(rs);
+				rs.next();
+				huesped = new Huesped(rs);
+				huesped.addReserva(new Reserva(rs));
+				while(rs.next()) {
+					huesped.addReserva(new Reserva(rs));
 				}
 			}
 		}
@@ -69,7 +73,7 @@ public class HuespedDaoImpl implements HuespedDao {
 		Long generatedKey = 0L;
 		String sql;
 		if(huesped.getId() != null && huesped.getId() != 0) {
-			sql = "UPDATE huespedes SET nombre=?, apellido=?, fecha_nacimiento=?, nacionalidad=?, telefono=? WHERE id=?";
+			sql = "UPDATE huespedes SET nombre=?, apellido=?, fecha_nacimiento=?, nacionalidad=?, telefono=? WHERE id_huesped=?";
 		} else {
 			sql = "INSERT INTO huespedes(nombre, apellido, fecha_nacimiento, nacionalidad, telefono) VALUES (?,?,?,?,?)";
 		}

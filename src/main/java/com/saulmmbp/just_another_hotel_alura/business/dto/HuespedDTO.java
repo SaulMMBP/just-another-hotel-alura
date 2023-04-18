@@ -2,7 +2,7 @@ package com.saulmmbp.just_another_hotel_alura.business.dto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.*;
 
 import com.saulmmbp.just_another_hotel_alura.model.*;
 
@@ -22,4 +22,26 @@ public record HuespedDTO(Long id, String nombre, String apellido, LocalDate fech
 	public List<ReservaDTO> getReservasDTO() {
 		return this.reservas.stream().map(reserva -> new ReservaDTO(reserva)).toList();
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(apellido, fechaNacimiento, id, nacionalidad, nombre, telefono);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HuespedDTO other = (HuespedDTO) obj;
+		return Objects.equals(apellido, other.apellido) && Objects.equals(fechaNacimiento, other.fechaNacimiento)
+				&& Objects.equals(id, other.id) && nacionalidad == other.nacionalidad
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(telefono, other.telefono);
+	}
+
+	
+
 }

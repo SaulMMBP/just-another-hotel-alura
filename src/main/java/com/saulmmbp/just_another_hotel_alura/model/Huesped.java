@@ -36,6 +36,7 @@ public class Huesped {
 
 	public Huesped(HuespedDTO huespedDto) {
 		this();
+		this.id = huespedDto.id();
 		this.nombre = huespedDto.nombre();
 		this.apellido = huespedDto.apellido();
 		this.fechaNacimiento = huespedDto.fechaNacimiento();
