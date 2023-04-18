@@ -57,10 +57,7 @@ public class Busqueda extends JPanel {
 	 * Initialize components
 	 */
 	public void init() {
-		/* get data */
-		huespedes = BusquedaService.getHuespedes();
-		reservas = BusquedaService.getReservas();
-
+		/* add header */
 		header = new JPanel(new BorderLayout());
 		header.setBorder(BorderFactory.createEmptyBorder(16, 16, 0, 16));
 		add(header, BorderLayout.NORTH);
@@ -137,7 +134,6 @@ public class Busqueda extends JPanel {
 		tbReservas = new JTable();
 		tbReservas.setDefaultEditor(Object.class, null);
 		mdlReservas = (DefaultTableModel) tbReservas.getModel();
-		fillTable(mdlReservas, reservas, tbhdReservas);
 		scrtbReservas = new JScrollPane(tbReservas);
 		tabs.addTab("Reservas", new ImageIcon(getClass().getResource("/images/reservado.png")), scrtbReservas);
 
@@ -146,7 +142,6 @@ public class Busqueda extends JPanel {
 		tbHuespedes.setDefaultEditor(Object.class, null);
 		tbHuespedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		mdlHuespedes = (DefaultTableModel) tbHuespedes.getModel();
-		fillTable(mdlHuespedes, huespedes, tbhdHuespedes);
 		scrtbHuespedes = new JScrollPane(tbHuespedes);
 		tabs.addTab("Huespedes", new ImageIcon(getClass().getResource("/images/pessoas-black.png")), scrtbHuespedes);
 
@@ -168,7 +163,7 @@ public class Busqueda extends JPanel {
 		/* add eliminar button */
 		btnDelete = new JButton("ELIMINAR");
 		btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnDelete.addActionListener(e -> {/* TODO implementar acción */});
+		btnDelete.addActionListener(e -> {/* TODO implementar delete */});
 		buttons.add(btnDelete);
 		
 		/* add detalles button */
@@ -187,6 +182,17 @@ public class Busqueda extends JPanel {
 		btnBack.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		buttons.add(btnBack);
+	}
+	
+	@Override
+	public void setVisible(boolean aFlag) {
+		super.setVisible(aFlag);
+		/* Update data */
+		huespedes = BusquedaService.getHuespedes();
+		reservas = BusquedaService.getReservas();
+		
+		fillTable(mdlReservas, reservas, tbhdReservas);
+		fillTable(mdlHuespedes, huespedes, tbhdHuespedes);
 	}
 
 	/**
@@ -254,4 +260,6 @@ public class Busqueda extends JPanel {
 			JOptionPane.showMessageDialog(this, detalles, "Detalles", JOptionPane.PLAIN_MESSAGE, null);
 		}
 	}
+	
+	
 }
