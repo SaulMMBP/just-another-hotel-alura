@@ -33,7 +33,7 @@ CREATE TABLE reservas(
 	forma_pago VARCHAR(100) NOT NULL,
 	huesped_id BIGINT NOT NULL,
 	PRIMARY KEY(id_reserva),
-	FOREIGN KEY(huesped_id) REFERENCES huespedes(id_huesped)
+	FOREIGN KEY(huesped_id) REFERENCES huespedes(id_huesped) ON DELETE CASCADE
 );
 
 # Insertamos un usuario

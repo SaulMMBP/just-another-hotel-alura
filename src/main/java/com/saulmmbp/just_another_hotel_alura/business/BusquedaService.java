@@ -116,4 +116,16 @@ public class BusquedaService {
 		}
 		return affectedRows;
 	}
+	
+	public static int deleteHuesped(Long id) {
+		int affectedRows = 0;
+		try(Connection conn = MySqlConnection.getConnection()) {
+			HuespedDao huespedDao = new HuespedDaoImpl(conn);
+			affectedRows = huespedDao.deleteById(id);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return affectedRows;
+	}
 }

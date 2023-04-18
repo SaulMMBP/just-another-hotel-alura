@@ -163,7 +163,11 @@ public class Busqueda extends JPanel {
 		/* add eliminar button */
 		btnDelete = new JButton("ELIMINAR");
 		btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnDelete.addActionListener(e -> {/* TODO implementar delete */});
+		btnDelete.addActionListener(e -> {
+			if(tabs.getSelectedIndex() == 1) {
+				deleteHuesped();
+			}
+		});
 		buttons.add(btnDelete);
 		
 		/* add detalles button */
@@ -261,5 +265,26 @@ public class Busqueda extends JPanel {
 		}
 	}
 	
+	/**
+	 * Delete a huesped with his related reservations
+	 */
+	private void deleteHuesped() {
+		Long id = Long.parseLong(mdlHuespedes.getValueAt(tbHuespedes.getSelectedRow(), 0).toString());
+		String nombre = mdlHuespedes.getValueAt(tbHuespedes.getSelectedRow(), 1).toString() + " " 
+		+ mdlHuespedes.getValueAt(tbHuespedes.getSelectedRow(), 2).toString();
+		int confirm = JOptionPane.showConfirmDialog(this, "Estás seguro de eliminar a " + nombre
+				+ "\ny todas sus reservaciones de la base de datos", "Eliminar", 
+				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		if (confirm == JOptionPane.YES_OPTION) {
+			int affectedRows = BusquedaService.deleteHuesped(id);
+			if(affectedRows != 0L) {
+				JOptionPane.showMessageDialog(this, "Huesped eliminado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+				huespedes = BusquedaService.getHuespedes();
+				reservas = BusquedaService.getReservas();
+				fillTable(mdlReservas, reservas, tbhdReservas);
+				fillTable(mdlHuespedes, huespedes, tbhdHuespedes);
+			}
+		}
+	}
 	
 }

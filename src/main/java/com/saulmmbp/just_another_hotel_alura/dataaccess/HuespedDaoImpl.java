@@ -103,4 +103,17 @@ public class HuespedDaoImpl implements HuespedDao {
 		
 	}
 
+	/**
+	 * Delete a huesped and his related reservations
+	 */
+	@Override
+	public int deleteById(Long id) throws SQLException {
+		int affectedRows = 0;
+		try(PreparedStatement stmt = conn.prepareStatement("DELETE FROM huespedes WHERE id_huesped=?")) {
+			stmt.setLong(1, id);
+			affectedRows = stmt.executeUpdate();
+		}
+		return affectedRows;
+	}
+
 }

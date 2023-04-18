@@ -15,4 +15,6 @@ public interface HuespedDao {
 	
 	Long save(Huesped huesped) throws SQLException;
 	
+	int deleteById(Long id) throws SQLException;
+	
 }
