@@ -56,9 +56,10 @@ public class HuespedDaoImpl implements HuespedDao {
 				+ "INNER JOIN reservas AS r ON h.id_huesped=r.huesped_id WHERE id_huesped=?")) {
 			stmt.setLong(1, id);
 			try(ResultSet rs = stmt.executeQuery()) {
-				rs.next();
-				huesped = new Huesped(rs);
-				huesped.addReserva(new Reserva(rs));
+				if (rs.next()) {
+					huesped = new Huesped(rs);
+					huesped.addReserva(new Reserva(rs));
+				}
 				while(rs.next()) {
 					huesped.addReserva(new Reserva(rs));
 				}

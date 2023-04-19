@@ -107,7 +107,7 @@ public class Detalles extends JPanel {
 		lblNombre = new JLabel("Nombre: ");
 		lblNombre.setFont(getFont().deriveFont(Font.BOLD));
 		huespedData.add(lblNombre);
-		fldnombre = new JTextField(getHuespedDto().nombre());
+		fldnombre = new JTextField(huespedDto.nombre());
 		fldnombre.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(12, 138, 199)));
 		if(!this.updateMode) {
 			fldnombre.setEditable(false);
@@ -116,7 +116,7 @@ public class Detalles extends JPanel {
 			@Override
 			public void focusGained(FocusEvent e) {
 				JTextField fld = (JTextField) e.getComponent();
-				if(fld.getText().equals(getHuespedDto().nombre()) && updateMode) {
+				if(fld.getText().equals(huespedDto.nombre()) && updateMode) {
 					fld.setText("");
 				}
 			}
@@ -125,7 +125,7 @@ public class Detalles extends JPanel {
 			public void focusLost(FocusEvent e) {
 				JTextField fld = (JTextField) e.getComponent();
 				if(fld.getText().isBlank()) {
-					fld.setText(getHuespedDto().nombre());
+					fld.setText(huespedDto.nombre());
 				}
 			}
 		});
@@ -135,7 +135,7 @@ public class Detalles extends JPanel {
 		lblApellido = new JLabel("Apellido: ");
 		lblApellido.setFont(getFont().deriveFont(Font.BOLD));
 		huespedData.add(lblApellido);
-		fldapellido = new JTextField(getHuespedDto().apellido());
+		fldapellido = new JTextField(huespedDto.apellido());
 		fldapellido.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(12, 138, 199)));
 		if(!this.updateMode) {
 			fldapellido.setEditable(false);
@@ -144,7 +144,7 @@ public class Detalles extends JPanel {
 			@Override
 			public void focusGained(FocusEvent e) {
 				JTextField fld = (JTextField) e.getComponent();
-				if(fld.getText().equals(getHuespedDto().apellido()) && updateMode) {
+				if(fld.getText().equals(huespedDto.apellido()) && updateMode) {
 					fld.setText("");
 				}
 			}
@@ -153,7 +153,7 @@ public class Detalles extends JPanel {
 			public void focusLost(FocusEvent e) {
 				JTextField fld = (JTextField) e.getComponent();
 				if(fld.getText().isBlank()) {
-					fld.setText(getHuespedDto().apellido());
+					fld.setText(huespedDto.apellido());
 				}
 			}
 		});
@@ -164,7 +164,7 @@ public class Detalles extends JPanel {
 		lblFechaNacimiento.setFont(getFont().deriveFont(Font.BOLD));
 		huespedData.add(lblFechaNacimiento);
 		fldfechaNacimiento = new JDateChooser();
-		Date fechaNacimiento = Date.from(getHuespedDto().fechaNacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date fechaNacimiento = Date.from(huespedDto.fechaNacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		fldfechaNacimiento.setDate(fechaNacimiento);
 		fldfechaNacimiento.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(12, 138, 199)));
 		if(!this.updateMode) {
@@ -195,7 +195,7 @@ public class Detalles extends JPanel {
 		huespedData.add(lblNacionalidad);
 		fldnacionalidad = new JComboBox<>();
 		Arrays.asList(Nacionalidad.values()).forEach(country -> fldnacionalidad.addItem(country));
-		fldnacionalidad.setSelectedIndex(Arrays.asList(Nacionalidad.values()).indexOf(getHuespedDto().nacionalidad()));
+		fldnacionalidad.setSelectedIndex(Arrays.asList(Nacionalidad.values()).indexOf(huespedDto.nacionalidad()));
 		fldnacionalidad.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(12, 138, 199)));
 		fldnacionalidad.setEditable(false);
 		if(!this.updateMode) {
@@ -207,7 +207,7 @@ public class Detalles extends JPanel {
 		lblTelefono = new JLabel("Telefono: ");
 		lblTelefono.setFont(getFont().deriveFont(Font.BOLD));
 		huespedData.add(lblTelefono);
-		fldtelefono = new JTextField(getHuespedDto().telefono().toString());
+		fldtelefono = new JTextField(huespedDto.telefono().toString());
 		fldtelefono.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(12, 138, 199)));
 		if(!this.updateMode) {
 			fldtelefono.setEditable(false);
@@ -216,7 +216,7 @@ public class Detalles extends JPanel {
 			@Override
 			public void focusGained(FocusEvent e) {
 				JTextField fld = (JTextField) e.getComponent();
-				if(fld.getText().equals(getHuespedDto().telefono()) && updateMode) {
+				if(fld.getText().equals(huespedDto.telefono()) && updateMode) {
 					fld.setText("");
 				}
 			}
@@ -225,7 +225,7 @@ public class Detalles extends JPanel {
 			public void focusLost(FocusEvent e) {
 				JTextField fld = (JTextField) e.getComponent();
 				if(fld.getText().isBlank()) {
-					fld.setText(getHuespedDto().telefono());
+					fld.setText(huespedDto.telefono());
 				}
 			}
 		});
@@ -245,7 +245,7 @@ public class Detalles extends JPanel {
 		tbReserva = new JTable();
 		tbReserva.setDefaultEditor(Object.class, null);
 		mdlReserva = (DefaultTableModel) tbReserva.getModel();
-		fillTable(mdlReserva, getHuespedDto().getReservasDTO(), tbhdReservas);
+		fillTable(mdlReserva, huespedDto.getReservasDTO(), tbhdReservas);
 
 		/* add scrollPane for table */
 		reservaData = new JScrollPane(tbReserva);
@@ -267,7 +267,7 @@ public class Detalles extends JPanel {
 	}
 
 	private void setHuespedDto() {
-		HuespedDTO editedHuesped = new HuespedDTO(getHuespedDto().id(), fldnombre.getText(), fldapellido.getText(), 
+		HuespedDTO editedHuesped = new HuespedDTO(huespedDto.id(), fldnombre.getText(), fldapellido.getText(), 
 				LocalDate.ofInstant(fldfechaNacimiento.getDate().toInstant(), ZoneId.systemDefault()), 
 				(Nacionalidad) fldnacionalidad.getSelectedItem(), fldtelefono.getText(), null);
 		

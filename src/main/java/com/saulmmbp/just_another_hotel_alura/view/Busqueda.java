@@ -38,7 +38,7 @@ public class Busqueda extends JPanel {
 	private List<HuespedDTO> huespedes;
 	private List<ReservaDTO> reservas;
 	private final String[] tbhdReservas = new String[] { "Número", "Fecha de entrada", "Fecha de salida", "Valor",
-			"Forma de pago", "Huesped Id" };
+			"Forma de pago", "Número de huesped" };
 	private final String[] tbhdHuespedes = new String[] { "Número", "Nombre", "Apellido", "Fecha de nacimiento",
 			"Nacionalidad", "telefono" };
 
@@ -249,19 +249,21 @@ public class Busqueda extends JPanel {
 	private void showHuespedDetails(boolean updateMode) {
 		Long id = Long.parseLong(mdlHuespedes.getValueAt(tbHuespedes.getSelectedRow(), 0).toString());
 		HuespedDTO huespedData = BusquedaService.getHuesped(id);
-		Detalles detalles = new Detalles(huespedData, updateMode);
-		if(updateMode) {
-			int optUpdate = JOptionPane.showOptionDialog(this, detalles, "Registro de huesped", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[] {"GUARDAR"}, null);
-			if(optUpdate == JOptionPane.OK_OPTION && detalles.getHuespedDto() != null) {
-				Long affectedRows = BusquedaService.editHuesped(detalles.getHuespedDto());
-				if(affectedRows != 0L) {
-					JOptionPane.showMessageDialog(this, "Huesped editado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-					huespedes = BusquedaService.getHuespedes();
-					fillTable(mdlHuespedes, huespedes, tbhdHuespedes);
+		if(huespedData != null) {
+			Detalles detalles = new Detalles(huespedData, updateMode);
+			if(updateMode) {
+				int optUpdate = JOptionPane.showOptionDialog(this, detalles, "Editar huesped", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[] {"GUARDAR"}, null);
+				if(optUpdate == JOptionPane.OK_OPTION && detalles.getHuespedDto() != null) {
+					Long affectedRows = BusquedaService.editHuesped(detalles.getHuespedDto());
+					if(affectedRows != 0L) {
+						JOptionPane.showMessageDialog(this, "Huesped editado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						huespedes = BusquedaService.getHuespedes();
+						fillTable(mdlHuespedes, huespedes, tbhdHuespedes);
+					}
 				}
+			} else {
+				JOptionPane.showMessageDialog(this, detalles, "Detalles", JOptionPane.PLAIN_MESSAGE, null);
 			}
-		} else {
-			JOptionPane.showMessageDialog(this, detalles, "Detalles", JOptionPane.PLAIN_MESSAGE, null);
 		}
 	}
 	

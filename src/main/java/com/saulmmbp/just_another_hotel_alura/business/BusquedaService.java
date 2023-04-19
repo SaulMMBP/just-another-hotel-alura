@@ -97,7 +97,13 @@ public class BusquedaService {
 		HuespedDTO huespedDto = null;
 		try(Connection conn = MySqlConnection.getConnection()) {
 			HuespedDao huespedDao = new HuespedDaoImpl(conn);
-			huespedDto = new HuespedDTO(huespedDao.findById(id));
+			Huesped huesped = huespedDao.findById(id);
+			if(huesped != null) {
+				huespedDto = new HuespedDTO(huespedDao.findById(id));
+			} else {
+				JOptionPane.showMessageDialog(null, "Este huesped no tienen ninguna reservación registrada",
+						"Info", JOptionPane.INFORMATION_MESSAGE);
+			}
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
 					"Error", JOptionPane.ERROR_MESSAGE);
