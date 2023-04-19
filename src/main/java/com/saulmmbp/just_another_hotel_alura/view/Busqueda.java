@@ -128,6 +128,15 @@ public class Busqueda extends JPanel {
 		tabs = new JTabbedPane();
 		tabs.setOpaque(false);
 		tabs.setBorder(BorderFactory.createEmptyBorder());
+		tabs.addChangeListener(e -> {
+			int tab = ((JTabbedPane) e.getSource()).getSelectedIndex();
+			if(tab == 0 && btnDetails != null) {
+				btnDetails.setEnabled(false);
+			} else if (tab == 1 && btnDetails != null){
+				btnDetails.setEnabled(true);
+			}
+			
+		});
 		content.add(tabs, BorderLayout.CENTER);
 
 		/* add reservas table */
@@ -173,8 +182,9 @@ public class Busqueda extends JPanel {
 		/* add detalles button */
 		btnDetails = new JButton("DETALLES");
 		btnDetails.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnDetails.setEnabled(false);
 		btnDetails.addActionListener(e -> {
-			if(tabs.getSelectedIndex() == 1) {
+			if(tabs.getSelectedIndex() == 1 && tbHuespedes.getSelectedRow() != -1) {
 				showHuespedDetails(false);
 			}
 		});
