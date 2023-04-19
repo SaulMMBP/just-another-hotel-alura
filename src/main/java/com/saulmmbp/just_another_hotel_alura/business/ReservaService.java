@@ -23,7 +23,7 @@ public class ReservaService {
 				
 				Long id_huesped = huespedDao.save(huesped);
 				huesped.setId(id_huesped);
-				reserva.setHuesped_id(id_huesped);
+				reserva.getHuesped().setId(id_huesped);
 				
 				Long id_reserva = reservaDao.save(reserva);
 				reserva.setId(id_reserva);

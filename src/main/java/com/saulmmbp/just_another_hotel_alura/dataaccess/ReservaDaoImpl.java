@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import com.saulmmbp.just_another_hotel_alura.model.Reserva;
+import com.saulmmbp.just_another_hotel_alura.model.*;
 
 public class ReservaDaoImpl implements ReservaDao {
 
@@ -30,11 +30,14 @@ public class ReservaDaoImpl implements ReservaDao {
 	@Override
 	public Reserva findById(Long id) throws SQLException {
 		Reserva reserva = null;
-		try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM reservas WHERE id_reserva=?")) {
+		try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM reservas AS r "
+				+ "INNER JOIN huespedes AS h ON r.huesped_id=h.id_huesped WHERE r.id_reserva=?")) {
 			stmt.setLong(1, id);
 			try(ResultSet rs = stmt.executeQuery()) {
 				if(rs.next()) {
 					reserva = new Reserva(rs);
+					Huesped huesped = new Huesped(rs);
+					reserva.setHuesped(huesped);
 				}
 			}
 		}
@@ -62,7 +65,7 @@ public class ReservaDaoImpl implements ReservaDao {
 		Long generatedKey = 0L;
 		String sql;
 		if(reserva.getId() != null && reserva.getId() != 0) {
-			sql = "UPDATE reservas SET fecha_entrada=?, fecha_salida=?, valor=?, forma_pago=?, huesped_id=? WHERE id=?";
+			sql = "UPDATE reservas SET fecha_entrada=?, fecha_salida=?, valor=?, forma_pago=?, huesped_id=? WHERE id_reserva=?";
 		} else {
 			sql = "INSERT INTO reservas(fecha_entrada, fecha_salida, valor, forma_pago, huesped_id) VALUES (?,?,?,?,?)";
 		}
@@ -71,7 +74,7 @@ public class ReservaDaoImpl implements ReservaDao {
 			stmt.setDate(2, Date.valueOf(reserva.getFechaSalida()));
 			stmt.setString(3, reserva.getValor().toPlainString());
 			stmt.setString(4, reserva.getFormaPago());
-			stmt.setLong(5, reserva.getHuesped_id());
+			stmt.setLong(5, reserva.getHuesped().getId());
 			if(reserva.getId() != null && reserva.getId() != 0) {
 				stmt.setLong(6, reserva.getId());
 			} 

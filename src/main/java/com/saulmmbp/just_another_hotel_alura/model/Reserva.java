@@ -14,27 +14,30 @@ public class Reserva {
 	private LocalDate fechaSalida;
 	private BigDecimal valor;
 	private String formaPago;
-	private Long huesped_id;
 	private Huesped huesped;
 
 	public Reserva() {
+		this.huesped = new Huesped();
 	}
 
 	public Reserva(ResultSet rs) throws SQLException {
+		this();
 		this.id = rs.getLong("id_reserva");
 		this.fechaEntrada = rs.getDate("fecha_entrada").toLocalDate();
 		this.fechaSalida = rs.getDate("fecha_salida").toLocalDate();
 		this.valor = new BigDecimal(rs.getString("valor"));
 		this.formaPago = rs.getString("forma_pago");
-		this.huesped_id = rs.getLong("huesped_id");
+		this.huesped.setId(rs.getLong("huesped_id"));
 	}
 
 	public Reserva(ReservaDTO reservaDto) {
+		this();
+		this.id = reservaDto.id();
 		this.fechaEntrada = reservaDto.fechaEntrada();
 		this.fechaSalida = reservaDto.fechaSalida();
 		this.valor = reservaDto.valor();
 		this.formaPago = reservaDto.formaPago();
-		this.huesped_id = reservaDto.huesped_id();
+		this.huesped.setId(reservaDto.huesped().getId());
 	}
 
 	public Long getId() {
@@ -77,14 +80,6 @@ public class Reserva {
 		this.formaPago = formaPago;
 	}
 
-	public Long getHuesped_id() {
-		return huesped_id;
-	}
-
-	public void setHuesped_id(Long huesped_id) {
-		this.huesped_id = huesped_id;
-	}
-
 	public Huesped getHuesped() {
 		return huesped;
 	}
@@ -113,7 +108,7 @@ public class Reserva {
 	@Override
 	public String toString() {
 		return "Reserva [id=" + id + ", fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", valor="
-				+ valor + ", formaPago=" + formaPago + "huesped_id" + huesped_id + "]";
+				+ valor + ", formaPago=" + formaPago + "huesped_id" + huesped.getId() + "]";
 	}
 
 }

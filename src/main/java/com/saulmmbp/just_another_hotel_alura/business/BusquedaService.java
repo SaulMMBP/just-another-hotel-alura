@@ -99,7 +99,7 @@ public class BusquedaService {
 			HuespedDao huespedDao = new HuespedDaoImpl(conn);
 			Huesped huesped = huespedDao.findById(id);
 			if(huesped != null) {
-				huespedDto = new HuespedDTO(huespedDao.findById(id));
+				huespedDto = new HuespedDTO(huesped);
 			} else {
 				JOptionPane.showMessageDialog(null, "Este huesped no tienen ninguna reservación registrada",
 						"Info", JOptionPane.INFORMATION_MESSAGE);
@@ -111,12 +111,38 @@ public class BusquedaService {
 		return huespedDto;
 	}
 	
+	public static ReservaDTO getReserva(Long id) {
+		ReservaDTO reservaDto = null;
+		try(Connection conn = MySqlConnection.getConnection()) {
+			ReservaDao reservaDao = new ReservaDaoImpl(conn);
+			Reserva reserva = reservaDao.findById(id);
+			reservaDto = new ReservaDTO(reserva);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return reservaDto;
+	}
+	
 	public static Long editHuesped(HuespedDTO huespedDto) {
 		Long affectedRows = 0L;
 		try(Connection conn = MySqlConnection.getConnection()) {
 			HuespedDao huespedDao = new HuespedDaoImpl(conn);
 			affectedRows = huespedDao.save(new Huesped(huespedDto));
 		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return affectedRows;
+	}
+	
+	public static Long editReserva(ReservaDTO reservaDto) {
+		Long affectedRows = 0L;
+		try(Connection conn = MySqlConnection.getConnection()) {
+			ReservaDao reservaDao = new ReservaDaoImpl(conn);
+			affectedRows = reservaDao.save(new Reserva(reservaDto));
+		} catch (SQLException e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
 					"Error", JOptionPane.ERROR_MESSAGE);
 		}

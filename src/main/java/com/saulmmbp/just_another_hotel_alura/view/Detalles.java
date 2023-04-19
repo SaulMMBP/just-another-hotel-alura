@@ -78,7 +78,7 @@ public class Detalles extends JPanel {
 		add(header, BorderLayout.NORTH);
 		
 		/* add logo */
-		logo = new JLabel("DETALLES DE RESERVACIÓN", Resources.getImageIcon("/images/aH-40px.png", this), SwingConstants.CENTER);
+		logo = new JLabel("DETALLES DE HUESPED", Resources.getImageIcon("/images/aH-40px.png", this), SwingConstants.CENTER);
 		logo.setFont(getFont().deriveFont(Font.BOLD, 32f));
 		logo.setForeground(new Color(12, 138, 199));
 		logo.setIconTextGap(10);

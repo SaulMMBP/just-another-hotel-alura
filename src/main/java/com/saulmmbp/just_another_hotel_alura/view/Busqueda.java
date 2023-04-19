@@ -128,15 +128,6 @@ public class Busqueda extends JPanel {
 		tabs = new JTabbedPane();
 		tabs.setOpaque(false);
 		tabs.setBorder(BorderFactory.createEmptyBorder());
-		tabs.addChangeListener(e -> {
-			int tab = ((JTabbedPane) e.getSource()).getSelectedIndex();
-			if(tab == 0 && btnDetails != null) {
-				btnDetails.setEnabled(false);
-			} else if (tab == 1 && btnDetails != null){
-				btnDetails.setEnabled(true);
-			}
-			
-		});
 		content.add(tabs, BorderLayout.CENTER);
 
 		/* add reservas table */
@@ -163,8 +154,11 @@ public class Busqueda extends JPanel {
 		btnEdit = new JButton("EDITAR");
 		btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnEdit.addActionListener(e -> {
-			if(tabs.getSelectedIndex() == 1) {
+			if(tabs.getSelectedIndex() == 1 && tbHuespedes.getSelectedRow() != -1) {
 				showHuespedDetails(true);
+			}
+			if(tabs.getSelectedIndex() == 0 && tbReservas.getSelectedRow() != -1) {
+				showReservaDetails(true);
 			}
 		});
 		buttons.add(btnEdit);
@@ -182,11 +176,14 @@ public class Busqueda extends JPanel {
 		/* add detalles button */
 		btnDetails = new JButton("DETALLES");
 		btnDetails.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnDetails.setEnabled(false);
 		btnDetails.addActionListener(e -> {
 			if(tabs.getSelectedIndex() == 1 && tbHuespedes.getSelectedRow() != -1) {
 				showHuespedDetails(false);
 			}
+			if(tabs.getSelectedIndex() == 0 && tbReservas.getSelectedRow() != -1) {
+				showReservaDetails(false);
+			}
+			
 		});
 		buttons.add(btnDetails);
 		
@@ -269,6 +266,30 @@ public class Busqueda extends JPanel {
 						JOptionPane.showMessageDialog(this, "Huesped editado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 						huespedes = BusquedaService.getHuespedes();
 						fillTable(mdlHuespedes, huespedes, tbhdHuespedes);
+					}
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, detalles, "Detalles", JOptionPane.PLAIN_MESSAGE, null);
+			}
+		}
+	}
+	
+	/**
+	 * Show details view with Reservation data
+	 */
+	private void showReservaDetails(boolean updateMode) {
+		Long id = Long.parseLong(mdlReservas.getValueAt(tbReservas.getSelectedRow(), 0).toString());
+		ReservaDTO ReservaData = BusquedaService.getReserva(id);
+		if(ReservaData != null) {
+			DetallesReserva detalles = new DetallesReserva(ReservaData, updateMode);
+			if(updateMode) {
+				int optUpdate = JOptionPane.showOptionDialog(this, detalles, "Editar huesped", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[] {"GUARDAR"}, null);
+				if(optUpdate == JOptionPane.OK_OPTION && detalles.getReservaDto() != null) {
+					Long affectedRows = BusquedaService.editReserva(detalles.getReservaDto());
+					if(affectedRows != 0L) {
+						JOptionPane.showMessageDialog(this, "Huesped editado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						reservas = BusquedaService.getReservas();
+						fillTable(mdlReservas, reservas, tbhdReservas);
 					}
 				}
 			} else {
