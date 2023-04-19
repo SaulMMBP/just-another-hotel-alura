@@ -46,17 +46,28 @@ erDiagram
           BIGINT id
           DATE fecha_entrada
           DATE fecha_salida
-          DOUBLE valor
+          VARCHAR valor
           VARCHAR forma_pago
           BIGINT huesped_id
      }
 
 ```
 
-## Capturas
+## &#128247; Capturas
 
 ||||
 |-|-|-|
-|![](gui-screenshots/gui-menu-principal.png)|![](gui-screenshots/gui-login.png)|![](gui-screenshots/gui-menu-usuario.png)|
-|![](gui-screenshots/gui-busqueda.png)|![](gui-screenshots/gui-reservas-view.png)|![](gui-screenshots/gui-registro-huesped.png)|
-|![](gui-screenshots/gui-exito.png)|
+|![Busqueda](gui-screenshots/gui-busqueda.png)|![Exito](gui-screenshots/gui-edici%C3%B3n-huesped-exito.png)|![Exito](gui-screenshots/gui-edici%C3%B3n-reserva-exito.png)|
+|![Edición huesped](gui-screenshots/gui-editar-huesped.png)|![Edición reserva](gui-screenshots/gui-editar-reserva.png)|![Error consulta](gui-screenshots/gui-error-registro.png)|
+|![Login](gui-screenshots/gui-login.png)|![Menu principal](gui-screenshots/gui-menu-principal.png)|![Menu Usuario](gui-screenshots/gui-menu-usuario.png)|
+|![Exito registro](gui-screenshots/gui-registro-exitoso.png)|![Regitro huesped](gui-screenshots/gui-registro-huesped.png)|![Registro Reserva](gui-screenshots/gui-reservas-view.png)|
+
+## &#128187; Indicaciones para ejecución desde IDE
+
+Antes de intentar correr el programa, se requiere ejecutar el script sql que viene en la carpeta `/db` de este repositorio.
+
+Para ejecutar el código es necesario asignar las variables de entorno en tu IDE:
+- MYSQL_USERNAME=TuUsuarioMySql
+- MYSQL_PASSWORD=TuContraseñaMySql
+
+El programa inicia su ejecución desde la clase `App` con el método main.
