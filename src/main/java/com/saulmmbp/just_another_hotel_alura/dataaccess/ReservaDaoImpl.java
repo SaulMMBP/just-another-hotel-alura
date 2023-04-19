@@ -21,7 +21,9 @@ public class ReservaDaoImpl implements ReservaDao {
 		try(Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery("SELECT * FROM reservas")) {
 			while(rs.next()) {
-				reservas.add(new Reserva(rs));
+				Reserva reserva = new Reserva(rs);
+				reserva.getHuesped().setId(rs.getLong("huesped_id"));
+				reservas.add(reserva);
 			}
 		}
 		return reservas;

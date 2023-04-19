@@ -113,6 +113,7 @@ public class ReservaForm extends JPanel {
 		fldCheckIn.setAlignmentX(Component.LEFT_ALIGNMENT);
 		fldCheckIn.addPropertyChangeListener("date", e -> {
 			fldCheckOut.setMinSelectableDate(((JDateChooser) e.getSource()).getDate());
+			fldCheckOut.setDate(((JDateChooser) e.getSource()).getDate());
 			calculateTotalValue(fldCheckIn.getDate(), fldCheckOut.getDate());
 			fldValue.setText(" $" + this.totalValue.toPlainString());
 		});

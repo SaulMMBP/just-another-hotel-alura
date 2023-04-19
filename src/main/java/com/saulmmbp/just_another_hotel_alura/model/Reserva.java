@@ -27,7 +27,6 @@ public class Reserva {
 		this.fechaSalida = rs.getDate("fecha_salida").toLocalDate();
 		this.valor = new BigDecimal(rs.getString("valor"));
 		this.formaPago = rs.getString("forma_pago");
-		this.huesped.setId(rs.getLong("huesped_id"));
 	}
 
 	public Reserva(ReservaDTO reservaDto) {
@@ -37,7 +36,7 @@ public class Reserva {
 		this.fechaSalida = reservaDto.fechaSalida();
 		this.valor = reservaDto.valor();
 		this.formaPago = reservaDto.formaPago();
-		this.huesped.setId(reservaDto.huesped().getId());
+		this.huesped = reservaDto.huesped();
 	}
 
 	public Long getId() {

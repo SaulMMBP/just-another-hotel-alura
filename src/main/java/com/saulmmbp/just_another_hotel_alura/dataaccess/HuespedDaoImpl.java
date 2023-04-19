@@ -58,7 +58,9 @@ public class HuespedDaoImpl implements HuespedDao {
 			try(ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
 					huesped = new Huesped(rs);
-					huesped.addReserva(new Reserva(rs));
+					Reserva reserva = new Reserva(rs);
+					reserva.getHuesped().setId(rs.getLong("id_huesped"));
+					huesped.addReserva(reserva);
 				}
 				while(rs.next()) {
 					huesped.addReserva(new Reserva(rs));

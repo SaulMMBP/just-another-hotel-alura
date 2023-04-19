@@ -31,7 +31,7 @@ public class MainFrame extends JFrame {
 	private void init() {
 		/* Add panels */
 		root = new JPanel(new CardLayout());
-//		root.add("menuPrincipal", new MenuPrincipal(this));
+		root.add("menuPrincipal", new MenuPrincipal(this));
 		root.add("menuUsuario", new MenuUsuario(this));
 		root.add("busqueda", new Busqueda(this));
 		

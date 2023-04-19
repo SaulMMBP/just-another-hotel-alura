@@ -54,10 +54,9 @@ erDiagram
 ```
 
 ## Capturas
-<img height="300" src="gui-screenshots/gui-menu-principal.png">
-<img height="300" src="gui-screenshots/gui-login.png">
-<img height="300" src="gui-screenshots/gui-menu-usuario.png">
-<img height="300" src="gui-screenshots/gui-busqueda.png">
-<img height="300" src="gui-screenshots/gui-reservas-view.png">
-<img height="300" src="gui-screenshots/gui-registro-huesped.png">
-<img height="200" src="gui-screenshots/gui-exito.png">
+
+||||
+|-|-|-|
+|![](gui-screenshots/gui-menu-principal.png)|![](gui-screenshots/gui-login.png)|![](gui-screenshots/gui-menu-usuario.png)|
+|![](gui-screenshots/gui-busqueda.png)|![](gui-screenshots/gui-reservas-view.png)|![](gui-screenshots/gui-registro-huesped.png)|
+|![](gui-screenshots/gui-exito.png)|

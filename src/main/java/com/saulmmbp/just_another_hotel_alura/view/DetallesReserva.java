@@ -136,6 +136,7 @@ public class DetallesReserva extends JPanel {
 		fldCheckIn.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(12, 138, 199)));
 		fldCheckIn.addPropertyChangeListener("date", e -> {
 			fldCheckOut.setMinSelectableDate(((JDateChooser) e.getSource()).getDate());
+			fldCheckOut.setDate(((JDateChooser) e.getSource()).getDate());
 			calculateTotalValue(fldCheckIn.getDate(), fldCheckOut.getDate());
 			fldValue.setText(" $" + this.totalValue.toPlainString());
 		});

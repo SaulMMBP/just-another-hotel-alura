@@ -287,7 +287,7 @@ public class Busqueda extends JPanel {
 				if(optUpdate == JOptionPane.OK_OPTION && detalles.getReservaDto() != null) {
 					Long affectedRows = BusquedaService.editReserva(detalles.getReservaDto());
 					if(affectedRows != 0L) {
-						JOptionPane.showMessageDialog(this, "Huesped editado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(this, "Reserva editada con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 						reservas = BusquedaService.getReservas();
 						fillTable(mdlReservas, reservas, tbhdReservas);
 					}
