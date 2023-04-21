@@ -62,6 +62,12 @@ erDiagram
 |![Login](gui-screenshots/gui-login.png)|![Menu principal](gui-screenshots/gui-menu-principal.png)|![Menu Usuario](gui-screenshots/gui-menu-usuario.png)|
 |![Exito registro](gui-screenshots/gui-registro-exitoso.png)|![Regitro huesped](gui-screenshots/gui-registro-huesped.png)|![Registro Reserva](gui-screenshots/gui-reservas-view.png)|
 
+<div align="center" >
+     <video width="540" controls>
+     <source src="gui-screenshots/hotel-alura.mp4" type="video/mp4">
+     </video>
+</div>
+
 ## &#128187; Indicaciones para ejecución desde IDE
 
 Antes de intentar correr el programa, se requiere ejecutar el script sql que viene en la carpeta `/db` de este repositorio.
