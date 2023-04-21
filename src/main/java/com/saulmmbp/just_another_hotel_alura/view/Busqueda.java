@@ -167,8 +167,11 @@ public class Busqueda extends JPanel {
 		btnDelete = new JButton("ELIMINAR");
 		btnDelete.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnDelete.addActionListener(e -> {
-			if(tabs.getSelectedIndex() == 1) {
+			if(tabs.getSelectedIndex() == 1 && tbHuespedes.getSelectedRow() != -1) {
 				deleteHuesped();
+			}
+			if(tabs.getSelectedIndex() == 0 && tbReservas.getSelectedRow() != -1) {
+				deleteReserva();
 			}
 		});
 		buttons.add(btnDelete);
@@ -304,7 +307,7 @@ public class Busqueda extends JPanel {
 	private void deleteHuesped() {
 		Long id = Long.parseLong(mdlHuespedes.getValueAt(tbHuespedes.getSelectedRow(), 0).toString());
 		String nombre = mdlHuespedes.getValueAt(tbHuespedes.getSelectedRow(), 1).toString() + " " 
-		+ mdlHuespedes.getValueAt(tbHuespedes.getSelectedRow(), 2).toString();
+				+ mdlHuespedes.getValueAt(tbHuespedes.getSelectedRow(), 2).toString();
 		int confirm = JOptionPane.showConfirmDialog(this, "Estás seguro de eliminar a " + nombre
 				+ "\ny todas sus reservaciones de la base de datos", "Eliminar", 
 				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -320,4 +323,21 @@ public class Busqueda extends JPanel {
 		}
 	}
 	
+	/**
+	 * Delete a reservation
+	 */
+	private void deleteReserva() {
+		Long id = Long.parseLong(mdlReservas.getValueAt(tbReservas.getSelectedRow(), 0).toString());
+		int confirm = JOptionPane.showConfirmDialog(this, "Estás seguro de eliminar la reservación con número : " + id + "?", "Eliminar",
+				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		if(confirm == JOptionPane.YES_OPTION) {
+			int affectedRows = BusquedaService.deleteReserva(id);
+			if(affectedRows != 0) {
+				JOptionPane.showMessageDialog(this, "Reserva eliminada con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+				reservas = BusquedaService.getReservas();
+				fillTable(mdlReservas, reservas, tbhdReservas);
+			}
+		}
+		
+	}
 }

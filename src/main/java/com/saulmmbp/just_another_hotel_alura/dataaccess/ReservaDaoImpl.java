@@ -95,5 +95,15 @@ public class ReservaDaoImpl implements ReservaDao {
 			return generatedKey;
 		}
 	}
+
+	@Override
+	public int deleteById(Long id) throws SQLException {
+		int affectedRows = 0;
+		try(PreparedStatement stmt = conn.prepareStatement("DELETE FROM reservas WHERE id_reserva=?")) {
+			stmt.setLong(1, id);
+			affectedRows = stmt.executeUpdate();
+		}
+		return affectedRows;
+	}
 	
 }

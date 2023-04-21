@@ -16,4 +16,6 @@ public interface ReservaDao {
 	
 	Long save(Reserva reserva) throws SQLException;
 
+	int deleteById(Long id) throws SQLException;
+
 }

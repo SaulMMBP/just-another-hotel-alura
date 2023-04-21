@@ -160,4 +160,16 @@ public class BusquedaService {
 		}
 		return affectedRows;
 	}
+
+	public static int deleteReserva(Long id) {
+		int affectedRows = 0;
+		try(Connection conn = MySqlConnection.getConnection()) {
+			ReservaDao reservaDao = new ReservaDaoImpl(conn);
+			affectedRows = reservaDao.deleteById(id);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Ups... Hubo un problema con la conexión a la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return affectedRows;
+	}
 }
