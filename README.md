@@ -62,9 +62,11 @@ erDiagram
 |![Login](gui-screenshots/gui-login.png)|![Menu principal](gui-screenshots/gui-menu-principal.png)|![Menu Usuario](gui-screenshots/gui-menu-usuario.png)|
 |![Exito registro](gui-screenshots/gui-registro-exitoso.png)|![Regitro huesped](gui-screenshots/gui-registro-huesped.png)|![Registro Reserva](gui-screenshots/gui-reservas-view.png)|
 
+[Video Ejemplo de uso de la aplicación](gui-screenshots/hotel-alura.mp4)
+
 <div align="center" >
      <video width="540" controls>
-     <source src="gui-screenshots/hotel-alura.mp4" type="video/mp4">
+          <source src="gui-screenshots/hotel-alura.mp4" type="video/mp4">
      </video>
 </div>
 
